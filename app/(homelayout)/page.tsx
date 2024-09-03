@@ -1,16 +1,17 @@
-import Banner from '@/components/global/banner';
-import Faqs from '@/components/global/faq';
+import About from "@/components/global/about";
+import Banner from "@/components/global/banner";
+import Faqs from "@/components/global/faq";
 
-import Footer from '@/components/global/footer';
+import Footer from "@/components/global/footer";
 
-import React from 'react';
+import React from "react";
 
 const Home = () => {
   return (
     <div>
       <Banner />
+      <About />
       <Faqs />
-
       {/* <About />
       <Projects />
       <ChooseUs />
