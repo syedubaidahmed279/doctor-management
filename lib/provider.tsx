@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Toaster } from 'sonner';
-import ContextProvider from './context';
+import { Toaster } from "sonner";
+import ContextProvider, { useAppContext } from "./context";
 
-export default function Provider({ children }) {
+export default function Provider({ children }: any) {
   return (
     <ContextProvider>
       {children}

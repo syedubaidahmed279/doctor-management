@@ -1,15 +1,23 @@
 /* eslint-disable react/prop-types */
 
-import axios from 'axios';
-import { createContext, useEffect, useState } from 'react';
+import api from "@/utils/axiosInstance";
+import axios from "axios";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
-export const UserContext = createContext();
+export const UserContext = createContext<any>({});
 
-// axios.defaults.baseURL = "https://event-backend-mauve.vercel.app/api/v1";
-axios.defaults.baseURL = 'http://localhost:5000/api/v1';
+export function useAppContext() {
+  return useContext(UserContext);
+}
 
-const ContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+const ContextProvider = ({ children }: any) => {
+  const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,47 +26,51 @@ const ContextProvider = ({ children }) => {
 
   const [users, setUsers] = useState([]);
 
-  // useEffect(() => {
-  //   const getAllUsers = async () => {
-  //     const response = await axios.get(`/users`);
+  const [isMinimized, setIsMinimized] = useState(false);
 
-  //     setUsers(response?.data?.data);
-  //   };
-  //   getAllUsers();
-  // }, [user?.role, usersRefetch]);
+  const toggle = useCallback(() => {
+    setIsMinimized((prevState) => !prevState);
+  }, []);
 
-  // const token = localStorage.getItem('accessToken');
-  // useEffect(() => {
-  //   const getProfile = async () => {
-  //     setIsLoading(true);
+  // console.log({ user });
 
-  //     try {
-  //       const promise = await axios.get(`/users/profile`, {
-  //         headers: {
-  //           authorization: `${token}`,
-  //         },
-  //       });
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const response = await api.get(`/users`);
 
-  //       setUser(promise.data.data);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //       setIsLoading(false);
-  //       if (error.response.data.message === 'Invalid Token!') {
-  //         localStorage.removeItem('accessToken');
-  //       }
-  //     }
-  //   };
+      setUsers(response?.data?.data);
+    };
+    getAllUsers();
+  }, [user?.role, usersRefetch]);
 
-  //   getProfile();
-  // }, [token, userRefetch]);
+  useEffect(() => {
+    const getProfile = async () => {
+      setIsLoading(true);
+
+      try {
+        const promise = await api.get(`/users/profile`);
+
+        setUser(promise.data.data);
+        setIsLoading(false);
+      } catch (error: any) {
+        console.log(error);
+        setIsLoading(false);
+        if (error.response.data.message === "Invalid Token!") {
+          localStorage.removeItem("dmToken");
+        }
+      }
+    };
+
+    getProfile();
+  }, [userRefetch]);
 
   const authInfo = {
     isLoading,
     userRefetch,
     setUserRefetch,
     setIsLoading,
-
+    isMinimized,
+    toggle,
     user,
     loading,
     setLoading,

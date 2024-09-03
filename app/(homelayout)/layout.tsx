@@ -1,8 +1,8 @@
-import Navbar from '@/components/global/navbar';
+import Navbar from "@/components/global/navbar";
 
-const HomeLayout = ({ children }) => {
+const HomeLayout = ({ children }: any) => {
   return (
-    <div className=''>
+    <div className="">
       <Navbar />
       {children}
     </div>
