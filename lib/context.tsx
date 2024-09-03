@@ -22,9 +22,11 @@ const ContextProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [userRefetch, setUserRefetch] = useState(false);
+  const [appointmentRefetch, setAppointmentRefetch] = useState(false);
   const [usersRefetch, setusersRefetch] = useState(false);
 
   const [users, setUsers] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
   const [isMinimized, setIsMinimized] = useState(false);
 
@@ -35,13 +37,30 @@ const ContextProvider = ({ children }: any) => {
   // console.log({ user });
 
   useEffect(() => {
-    const getAllUsers = async () => {
-      const response = await api.get(`/users`);
+    try {
+      const getAllUsers = async () => {
+        const response = await api.get(`/users`);
 
-      setUsers(response?.data?.data);
-    };
-    getAllUsers();
+        setUsers(response?.data?.data);
+      };
+      getAllUsers();
+    } catch (error) {
+      console.log(error);
+    }
   }, [user?.role, usersRefetch]);
+
+  useEffect(() => {
+    try {
+      const getAllAppointments = async () => {
+        const response = await api.get(`/appointment`);
+
+        setAppointments(response?.data?.data);
+      };
+      getAllAppointments();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [appointmentRefetch]);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -64,6 +83,11 @@ const ContextProvider = ({ children }: any) => {
     getProfile();
   }, [userRefetch]);
 
+  const logout = () => {
+    window.localStorage.removeItem("dmToken");
+    setUser({});
+  };
+
   const authInfo = {
     isLoading,
     userRefetch,
@@ -77,7 +101,12 @@ const ContextProvider = ({ children }: any) => {
     users,
     usersRefetch,
     setusersRefetch,
+    logout,
+    appointmentRefetch,
+    setAppointmentRefetch,
+    appointments,
   };
+
   return (
     <UserContext.Provider value={authInfo}>{children}</UserContext.Provider>
   );

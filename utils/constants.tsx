@@ -58,34 +58,6 @@ export const projectData = [
     href: "https://www.rastro.ai/",
   },
 ];
-export const employeeData = [
-  {
-    name: "Riad Ahmed",
-    position: "Founder",
-    img: "/riad.jpg",
-    href: "https://reachout-1b7f6.web.app/",
-  },
-  {
-    name: "Mohammad Jahid",
-    position: "Full Stack Developer",
-    img: "/jahid.png",
-  },
-  {
-    name: "Abdur Rahman",
-    position: "Full Stack Developer",
-    img: "/abdur_rahman.jpg",
-  },
-  {
-    name: "Adnan Sarkar",
-    position: "Backend Developer",
-    img: "/adnan.jpg",
-  },
-  {
-    name: "Faysal Ahmed",
-    position: "App Developer",
-    img: "/faysal.jpg",
-  },
-];
 
 export const faqItems = [
   {
@@ -136,8 +108,10 @@ export const faqItems = [
 ];
 
 export const menuItems = [
-  { href: "/login", label: "Login" },
+  // { href: "/login", label: "Login" },
   { href: "/about", label: "About us" },
+  { href: "/faqs", label: "FAQs" },
+  { href: "/contact", label: "Contact us" },
 ];
 
 export const navItems = [
@@ -146,6 +120,12 @@ export const navItems = [
     href: "/doctors-dashboard",
     icon: <Stethoscope className="ml-3 size-5 flex-none" />,
     label: "Appointments",
+  },
+  {
+    title: "Profile",
+    href: "/doctors-dashboard/profile",
+    icon: <User className="ml-3 size-5 flex-none" />,
+    label: "Profile",
   },
 ];
 

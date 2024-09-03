@@ -15,13 +15,14 @@ import { cn, scrollToSection } from "@/lib/utils";
 import Logo from "./logo";
 import { menuItems } from "@/utils/constants";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useAppContext } from "@/lib/context";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const path = usePathname();
+  const { user, logout } = useAppContext();
 
-  const handleRedirect = (url: string) => {
-    window.open(url, "_blank");
-  };
   return (
     <header
       className={cn(
@@ -40,56 +41,69 @@ export default function Navbar() {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="max-w-[300px] bg-secondary border-none px-[15px]"
+            className="max-w-[300px] bg-white border-none px-[15px]"
           >
             <SheetHeader className="mb-10">
               <Logo url="/logo.png" />
             </SheetHeader>
             <div className="grid py-6">
               {menuItems.map((item, i) => (
-                <Button
+                <Link
                   key={i}
-                  variant="special"
-                  size="special"
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-3",
+                    path === item.href ? "bg-accent" : "transparent"
+                  )}
                   onClick={() => {
-                    scrollToSection(item.href);
-                    setOpen(false);
+                    if (setOpen) setOpen(false);
                   }}
-                  className="flex w-full items-center text-[15px] font-medium h-[46px] text-white border-b border-white/15"
                 >
-                  {item.label}
-                </Button>
+                  <span className="mr-2 truncate">{item.label}</span>
+                </Link>
               ))}
-            </div>
 
-            <SheetFooter className="mt-4">
-              <div className="flex flex-col gap-4">
-                <div className="flex gap-4 mt-4">
-                  <Button
-                    onClick={() =>
-                      handleRedirect(
-                        "https://www.facebook.com/profile.php?id=100092204199645"
-                      )
+              {!user?.email ? (
+                <Link
+                  href="/login"
+                  className={cn(
+                    "flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-3",
+                    path === "/login" ? "bg-accent" : "transparent"
+                  )}
+                  onClick={() => {
+                    if (setOpen) setOpen(false);
+                  }}
+                >
+                  <span className="mr-2 truncate">Login</span>
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href={
+                      user?.role === "admin"
+                        ? "/doctor-dashboard"
+                        : "admin-dashboard"
                     }
-                    size="icon"
-                    className="bg-[#1f403d] rounded-full"
+                    className={cn(
+                      "flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-3"
+                    )}
+                    onClick={() => {
+                      if (setOpen) setOpen(false);
+                    }}
                   >
-                    <Facebook className="w-5 h-5" />
-                  </Button>
+                    <span className="mr-2 truncate">My dashboard</span>
+                  </Link>
                   <Button
-                    onClick={() =>
-                      handleRedirect(
-                        "https://www.linkedin.com/company/artifconnect/"
-                      )
-                    }
-                    size="icon"
-                    className="bg-[#1f403d] rounded-full"
+                    variant="special"
+                    size="special"
+                    onClick={logout}
+                    className="flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-3"
                   >
-                    <Linkedin className="w-5 h-5" />
+                    Logout
                   </Button>
-                </div>
-              </div>
-            </SheetFooter>
+                </>
+              )}
+            </div>
           </SheetContent>
         </Sheet>
 
@@ -103,6 +117,37 @@ export default function Navbar() {
               {item.label}
             </Link>
           ))}
+
+          {!user?.email ? (
+            <Link
+              href="/login"
+              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-lg font-medium transition-colors duration-300 hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
+            >
+              Login
+            </Link>
+          ) : (
+            <>
+              <Link
+                href={
+                  user?.role === "admin"
+                    ? "/doctor-dashboard"
+                    : "admin-dashboard"
+                }
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-lg font-medium transition-colors duration-300 hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
+              >
+                My dashboard
+              </Link>
+
+              <Button
+                variant="special"
+                size="special"
+                onClick={logout}
+                className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-lg font-medium transition-colors duration-300 hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </nav>
       </div>
     </header>

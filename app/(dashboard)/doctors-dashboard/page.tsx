@@ -2,14 +2,15 @@
 
 import { Appointments } from "@/components/global/appointments";
 import PageContainer from "@/components/global/page-container";
-import { users } from "@/utils/constants";
+import { useAppContext } from "@/lib/context";
 import React from "react";
 
 const Dashboard = () => {
+  const { appointments } = useAppContext();
   return (
     <PageContainer>
       <div className="space-y-2">
-        <Appointments data={users} />
+        <Appointments data={appointments} />
       </div>
     </PageContainer>
   );

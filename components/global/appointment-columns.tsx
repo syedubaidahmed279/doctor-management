@@ -2,6 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { AppointmentCellAction } from "./appointment-cell-action";
+import { format } from "date-fns";
 
 export const appointmentColumns: ColumnDef<any>[] = [
   {
@@ -20,6 +21,14 @@ export const appointmentColumns: ColumnDef<any>[] = [
   {
     accessorKey: "nextAppointmentDate",
     header: "NEXT APPOINTMENT DATE",
+    cell: ({ row }) => {
+      const nextAppointmentDate = row.original.nextAppointmentDate;
+      return <p>{format(nextAppointmentDate, "PPP")}</p>;
+    },
+  },
+  {
+    accessorKey: "fee",
+    header: "FEE",
   },
   {
     id: "actions",
