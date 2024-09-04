@@ -23,10 +23,11 @@ const ContextProvider = ({ children }: any) => {
 
   const [userRefetch, setUserRefetch] = useState(false);
   const [appointmentRefetch, setAppointmentRefetch] = useState(false);
-  const [usersRefetch, setusersRefetch] = useState(false);
+  const [usersRefetch, setUsersRefetch] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [doctors, setDoctors] = useState([]);
 
   const [isMinimized, setIsMinimized] = useState(false);
 
@@ -100,11 +101,13 @@ const ContextProvider = ({ children }: any) => {
     setLoading,
     users,
     usersRefetch,
-    setusersRefetch,
+    setUsersRefetch,
     logout,
     appointmentRefetch,
     setAppointmentRefetch,
     appointments,
+    doctors,
+    setDoctors,
   };
 
   return (

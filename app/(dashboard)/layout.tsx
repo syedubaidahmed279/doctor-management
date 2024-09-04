@@ -5,19 +5,30 @@ import Loading from "@/components/global/loading";
 import Sidebar from "@/components/global/sidebar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAppContext } from "@/lib/context";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { isLoading, user } = useAppContext();
-  // console.log({ user });
+
+  const path = usePathname();
 
   if (isLoading) {
     return <Loading size="lg" />;
   }
 
   if (!user?.email) {
-    redirect("/");
+    return redirect("/");
   }
+
+  if (user?.role === "admin" && path === "/doctors-dashboard") {
+    return redirect("/admin-dashboard");
+  }
+
+  if (user?.role === "doctor" && path === "/admin-dashboard") {
+    return redirect("/doctors-dashboard");
+  }
+
   return (
     <div className="flex">
       <Sidebar />

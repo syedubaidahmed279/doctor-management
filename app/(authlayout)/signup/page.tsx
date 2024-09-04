@@ -82,14 +82,18 @@ export default function Signup() {
         window.localStorage.setItem("dmToken", promise.data.data);
         setUserRefetch(!userRefetch);
         setTimeout(() => {
-          toast.success(`Signed up`);
+          toast.success(`Signed up`, {
+            position: "top-center",
+          });
           router.push("/doctors-dashboard");
         }, 1000);
       }
     } catch (error: any) {
       console.log(error);
 
-      return toast.error(error.response.data.message || `Sign up failed`);
+      return toast.error(error.response.data.message || `Sign up failed`, {
+        position: "top-center",
+      });
     }
   };
 

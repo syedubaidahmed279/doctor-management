@@ -1,8 +1,10 @@
 import About from "@/components/global/about";
 import Banner from "@/components/global/banner";
+import ChooseUs from "@/components/global/choose-us";
 import Faqs from "@/components/global/faq";
 
 import Footer from "@/components/global/footer";
+import Onboard from "@/components/global/onboard";
 
 import React from "react";
 
@@ -11,6 +13,8 @@ const Home = () => {
     <div>
       <Banner />
       <About />
+      <ChooseUs />
+      <Onboard />
       <Faqs />
       {/* <About />
       <Projects />
@@ -23,7 +27,6 @@ const Home = () => {
       <Partners />
       <Pricing />
       <Faqs /> */}
-      <Footer />
     </div>
   );
 };

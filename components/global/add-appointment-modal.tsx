@@ -25,24 +25,30 @@ export function AddAppointmentModal() {
   const [inputs, setInputs] = useState<any>({});
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date>();
-  const { appointmentRefetch, setAppointmentRefetch } = useAppContext();
+  const { user, appointmentRefetch, setAppointmentRefetch } = useAppContext();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     inputs.nextAppointmentDate = date;
+    inputs.doctor = user?._id;
 
     try {
       const promise = await api.post(`/appointment/create`, inputs);
       if (promise.status === 200) {
         setAppointmentRefetch(!appointmentRefetch);
         setOpen(false);
-        toast.success(`New appointment added.`);
+        toast.success(`New appointment added.`, {
+          position: "top-center",
+        });
       }
     } catch (error: any) {
       console.log(error);
 
       return toast.error(
-        error.response.data.message || `Failed to add new appointment!`
+        error.response.data.message || `Failed to add new appointment!`,
+        {
+          position: "top-center",
+        }
       );
     }
   };
@@ -108,7 +114,7 @@ export function AddAppointmentModal() {
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  initialFocus
+                  // initialFocus
                   required
                 />
               </PopoverContent>

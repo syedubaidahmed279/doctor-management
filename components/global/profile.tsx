@@ -44,7 +44,9 @@ export default function Profile() {
             <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
-            <h4 className="text-lg font-medium">{user?.name}</h4>
+            <h4 className="text-lg font-medium">
+              {user?.name} ({user?.role})
+            </h4>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {user?.email}
             </p>

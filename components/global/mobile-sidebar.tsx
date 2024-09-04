@@ -4,7 +4,8 @@ import { MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { DashboardNav } from "./dashboard-nav";
-import { navItems } from "@/utils/constants";
+import { navItems, navItemsAdmin } from "@/utils/constants";
+import { useAppContext } from "@/lib/context";
 
 // import { Playlist } from "../data/playlists";
 
@@ -14,6 +15,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function MobileSidebar({ className }: SidebarProps) {
   const [open, setOpen] = useState(false);
+  const { user } = useAppContext();
   return (
     <>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -28,7 +30,7 @@ export function MobileSidebar({ className }: SidebarProps) {
               </h2>
               <div className="space-y-1">
                 <DashboardNav
-                  items={navItems}
+                  items={user?.role === "admin" ? navItemsAdmin : navItems}
                   isMobileNav={true}
                   setOpen={setOpen}
                 />

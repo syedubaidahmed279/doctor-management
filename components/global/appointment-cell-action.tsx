@@ -11,32 +11,41 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useAppContext } from "@/lib/context";
+import api from "@/utils/axiosInstance";
+import { toast } from "sonner";
+import { EditAppointmentModal } from "./edit-appointment-modal";
 
 export const AppointmentCellAction: React.FC<any> = ({ data }) => {
-  const router = useRouter();
+  const { setAppointmentRefetch, appointmentRefetch } = useAppContext();
+
+  const handleDelete = async (id: any) => {
+    try {
+      const promise = await api.delete(`/appointment/delete/${id}`);
+      if (promise.status === 200) {
+        setAppointmentRefetch(!appointmentRefetch);
+
+        toast.success(`Appointment deleted Successfully!`, {
+          position: "top-center",
+        });
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
 
   return (
-    <>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+    <div className="flex items-center gap-3">
+      <EditAppointmentModal data={data} />
 
-          <DropdownMenuItem
-          // onClick={() => router.push(`/dashboard/user/${data.id}`)}
-          >
-            <Edit className="mr-2 h-4 w-4" /> Update
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Trash className="mr-2 h-4 w-4" /> Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </>
+      <Button
+        variant="destructive"
+        size="sm"
+        className="h-7 text-xs"
+        onClick={() => handleDelete(data._id)}
+      >
+        <Trash className="mr-2 h-4 w-4" /> Delete
+      </Button>
+    </div>
   );
 };

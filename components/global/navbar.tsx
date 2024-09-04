@@ -81,8 +81,8 @@ export default function Navbar() {
                   <Link
                     href={
                       user?.role === "admin"
-                        ? "/doctor-dashboard"
-                        : "admin-dashboard"
+                        ? "/admin-dashboard"
+                        : "/doctors-dashboard"
                     }
                     className={cn(
                       "flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground pl-3"
@@ -130,8 +130,8 @@ export default function Navbar() {
               <Link
                 href={
                   user?.role === "admin"
-                    ? "/doctor-dashboard"
-                    : "admin-dashboard"
+                    ? "/admin-dashboard"
+                    : "/doctors-dashboard"
                 }
                 className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-lg font-medium transition-colors duration-300 hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50"
               >

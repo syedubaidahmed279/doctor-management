@@ -42,14 +42,18 @@ export default function Login() {
         window.localStorage.setItem("dmToken", promise.data.data);
         setUserRefetch(!userRefetch);
         setTimeout(() => {
-          toast.success(`Logged in`);
+          toast.success(`Logged in`, {
+            position: "top-center",
+          });
           router.push("/doctors-dashboard");
         }, 1000);
       }
     } catch (error: any) {
       console.log(error);
 
-      return toast.error(error.response.data.message || `Log in failed`);
+      return toast.error(error.response.data.message || `Log in failed`, {
+        position: "top-center",
+      });
     }
   };
 

@@ -6,14 +6,14 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useAppContext } from "@/lib/context";
 import { DashboardNav } from "./dashboard-nav";
-import { navItems } from "@/utils/constants";
+import { navItems, navItemsAdmin } from "@/utils/constants";
 
 type SidebarProps = {
   className?: string;
 };
 
 export default function Sidebar({ className }: SidebarProps) {
-  const { isMinimized, toggle } = useAppContext();
+  const { isMinimized, toggle, user } = useAppContext();
 
   const handleToggle = () => {
     toggle();
@@ -53,7 +53,9 @@ export default function Sidebar({ className }: SidebarProps) {
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <div className="mt-3 space-y-1">
-            <DashboardNav items={navItems} />
+            <DashboardNav
+              items={user?.role === "admin" ? navItemsAdmin : navItems}
+            />
           </div>
         </div>
       </div>

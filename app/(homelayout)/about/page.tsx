@@ -4,7 +4,10 @@ import Title from "@/components/global/title";
 
 const AboutPage = () => {
   return (
-    <div id="faqs" className="px-4 xl:px-0 py-[60px] md:py-[120px]">
+    <div
+      id="faqs"
+      className="px-4 xl:px-0 py-[60px] md:py-[120px] min-h-screen"
+    >
       <div className="max-w-[1200px] mx-auto">
         <div className="flex flex-col gap-2 justify-center items-center text-start pb-12">
           <SectionTitle title="About Us" />

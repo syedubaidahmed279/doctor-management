@@ -69,32 +69,36 @@ export default function ProfileForm({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="speciality"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input disabled={loading} {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="hospitalName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Hospital Name</FormLabel>
-              <FormControl>
-                <Input disabled={loading} {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {user?.role === "doctor" && (
+          <>
+            <FormField
+              control={form.control}
+              name="speciality"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Speciality</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="hospitalName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Hospital Name</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </>
+        )}
         <FormField
           control={form.control}
           name="phone"
