@@ -10,9 +10,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Artif Software",
+  title: "Doc Alert",
   description:
-    "Artif software offers top-notch web design and development services, including UI/UX design, advanced development, and AI solutions.",
+    "DOCalert is the revolutionary patient management platform empowering doctors to deliver exceptional care. With a robust suite of tools, we streamline patient data management, foster growth, and celebrate excellence.",
   twitter: {
     card: "summary_large_image",
   },

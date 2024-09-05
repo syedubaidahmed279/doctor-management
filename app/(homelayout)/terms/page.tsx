@@ -69,8 +69,8 @@ const TermsPage = () => {
             <p className="text-muted-foreground text-[17px]">
               <strong>Contact Us: </strong>For questions or concerns, please
               contact our support team at support{" "}
-              <a className="text-blue-600" href="mailto:docalart@gmail.com">
-                docalart@gmail.com
+              <a className="text-blue-600" href="mailto:docalert.in@gmail.com">
+                docalert.in@gmail.com
               </a>
             </p>
           </div>

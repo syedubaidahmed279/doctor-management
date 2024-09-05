@@ -40,7 +40,11 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/doctors-dashboard/profile">
+          <Link
+            href={`/${
+              user?.role === "admin" ? "admin" : "doctors"
+            }-dashboard/profile`}
+          >
             <DropdownMenuItem className="cursor-pointer">
               Profile
             </DropdownMenuItem>

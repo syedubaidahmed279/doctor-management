@@ -30,7 +30,7 @@ export default function Sidebar({ className }: SidebarProps) {
     >
       <div className="hidden p-5 pt-10 lg:block">
         <Link href={"/"}>
-          <Logo url="/doc-alert.png" />
+          <Logo url="/logo-new.png" />
         </Link>
       </div>
       <ChevronLeft

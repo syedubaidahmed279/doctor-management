@@ -17,7 +17,7 @@ import SectionTitle from "./sec-title";
 import { Button } from "../ui/button";
 
 const Onboard = () => {
-  const email = "docalart@gmail.com";
+  const email = "docalert.in@gmail.com";
 
   const handleEmail = () => {
     window.location.href = `mailto:${email}`;

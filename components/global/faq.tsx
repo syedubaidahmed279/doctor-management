@@ -9,7 +9,7 @@ import FaqAccordion from "./faq-accordion";
 import { MessageCircleQuestion } from "lucide-react";
 
 const Faqs = () => {
-  const email = "docalart@gmail.com";
+  const email = "docalert.in@gmail.com";
 
   const handleEmail = () => {
     window.location.href = `mailto:${email}`;
