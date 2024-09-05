@@ -9,7 +9,7 @@ export default function Auth({ title, children, subtitle }: any) {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[360px]">
           <div className="flex flex-col items-center space-y-2 text-center">
             <Link href="/" className="" prefetch={false}>
-              <Logo url="/logo.jpg" />
+              <Logo url="/doc-alert.png" />
             </Link>
             <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
             {subtitle ? (

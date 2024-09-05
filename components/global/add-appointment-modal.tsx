@@ -24,18 +24,19 @@ import { toast } from "sonner";
 export function AddAppointmentModal() {
   const [inputs, setInputs] = useState<any>({});
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<any>();
   const { user, appointmentRefetch, setAppointmentRefetch } = useAppContext();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    inputs.nextAppointmentDate = date;
+    inputs.nextAppointmentDate = format(date, "PPP");
     inputs.doctor = user?._id;
 
     try {
       const promise = await api.post(`/appointment/create`, inputs);
       if (promise.status === 200) {
         setAppointmentRefetch(!appointmentRefetch);
+        setInputs({});
         setOpen(false);
         toast.success(`New appointment added.`, {
           position: "top-center",
@@ -62,10 +63,8 @@ export function AddAppointmentModal() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Add new appointment</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">

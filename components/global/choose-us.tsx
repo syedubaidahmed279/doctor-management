@@ -22,7 +22,7 @@ const ChooseUs = () => {
         <div className="flex flex-col gap-2 justify-center items-center text-center pb-12">
           <SectionTitle title="Why Choose Us" />
           <Title
-            title="Why Choose DOCalart?"
+            title="Why Choose DOCalert?"
             className="text-[32px] lg:text-[46px] leading-[1.3em]"
           />
           <p className="text-muted-foreground max-w-[405px] text-[17px]">
@@ -54,8 +54,8 @@ const ChooseUs = () => {
             </div>
 
             <div className="relative hidden md:block z-[1] choose-bg w-[640px] h-[640px] order-last 2lg:order-none ">
-              <div className="w-[350px] h-[460px] pt-[50px] mx-auto">
-                <img src="/doc-3.png" alt="Vector Image" className="" />
+              <div className="w-[350px] h-[560px] pt-[50px] mx-auto">
+                <img src="/doc-6.png" alt="Vector Image" className="h-full" />
               </div>
             </div>
 

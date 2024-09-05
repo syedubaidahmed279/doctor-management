@@ -21,6 +21,7 @@ const Doctors: React.FC<any> = () => {
       </div>
       <Separator />
       <DataTable
+        viewSearchKey="by Name"
         searchKey="name"
         columns={getDoctorsColumns()}
         data={doctors}

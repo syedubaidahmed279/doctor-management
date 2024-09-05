@@ -15,6 +15,7 @@ import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 import { toast } from "sonner";
 import AppointmentForm from "./appointment-form";
+import { format } from "date-fns";
 
 export function EditAppointmentModal({ data }: any) {
   const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ export function EditAppointmentModal({ data }: any) {
     try {
       setLoading(true);
 
-      console.log({ payload });
+      payload.nextAppointmentDate = format(payload.nextAppointmentDate, "PPP");
 
       const promise = await api.patch(
         `/appointment/update/${data?._id}`,
@@ -68,9 +69,10 @@ export function EditAppointmentModal({ data }: any) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Edit appointment</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your appointment here. Click update when you're
+            done.
           </DialogDescription>
         </DialogHeader>
 

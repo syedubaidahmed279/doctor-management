@@ -1,4 +1,4 @@
-import { BriefcaseMedical, Stethoscope, User } from "lucide-react";
+import { BriefcaseMedical, Newspaper, Stethoscope, User } from "lucide-react";
 
 export const faqItems = [
   {
@@ -52,6 +52,7 @@ export const menuItems = [
   // { href: "/login", label: "Login" },
   { href: "/about", label: "About us" },
   { href: "/faqs", label: "FAQs" },
+  { href: "/articles", label: "Articles" },
 ];
 
 export const footerItems = [
@@ -59,6 +60,7 @@ export const footerItems = [
   { href: "/about", label: "About us" },
   { href: "/faqs", label: "FAQs" },
   { href: "/why-us", label: "Why choose us?" },
+  { href: "/articles", label: "Articles" },
   { href: "/terms", label: "Terms and Conditions" },
 ];
 
@@ -89,6 +91,12 @@ export const navItemsAdmin = [
     href: "/admin-dashboard/appointments",
     icon: <Stethoscope className="size-5 flex-none" />,
     label: "Appointments",
+  },
+  {
+    title: "Articles",
+    href: "/admin-dashboard/articles",
+    icon: <Newspaper className="size-5 flex-none" />,
+    label: "Articles",
   },
   {
     title: "Profile",

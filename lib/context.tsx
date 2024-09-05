@@ -24,9 +24,11 @@ const ContextProvider = ({ children }: any) => {
   const [userRefetch, setUserRefetch] = useState(false);
   const [appointmentRefetch, setAppointmentRefetch] = useState(false);
   const [usersRefetch, setUsersRefetch] = useState(false);
+  const [articlesRefetch, setArticlesRefetch] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [doctors, setDoctors] = useState([]);
 
   const [isMinimized, setIsMinimized] = useState(false);
@@ -62,6 +64,19 @@ const ContextProvider = ({ children }: any) => {
       console.log(error);
     }
   }, [appointmentRefetch]);
+
+  useEffect(() => {
+    try {
+      const getAllAppointments = async () => {
+        const response = await api.get(`/article`);
+
+        setArticles(response?.data?.data);
+      };
+      getAllAppointments();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [articlesRefetch]);
 
   useEffect(() => {
     const getProfile = async () => {
@@ -108,6 +123,10 @@ const ContextProvider = ({ children }: any) => {
     appointments,
     doctors,
     setDoctors,
+    articles,
+    setArticles,
+    articlesRefetch,
+    setArticlesRefetch,
   };
 
   return (

@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { AppointmentCellAction } from "./appointment-cell-action";
 import { format } from "date-fns";
 import { DoctorsCellAction } from "./doctors-cell-action";
+import { ArticleCell } from "./article-cell";
 
 export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
@@ -23,10 +24,10 @@ export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
     {
       accessorKey: "nextAppointmentDate",
       header: "NEXT APPOINTMENT DATE",
-      cell: ({ row }) => {
-        const nextAppointmentDate = row.original.nextAppointmentDate;
-        return <p>{format(nextAppointmentDate, "PPP")}</p>;
-      },
+      // cell: ({ row }) => {
+      //   const nextAppointmentDate = row.original.nextAppointmentDate;
+      //   return <p>{format(nextAppointmentDate, "PPP")}</p>;
+      // },
     },
     {
       accessorKey: "fee",
@@ -76,6 +77,43 @@ export const getDoctorsColumns = (): ColumnDef<any>[] => {
       header: "ACTION",
       id: "actions",
       cell: ({ row }: any) => <DoctorsCellAction data={row.original} />,
+    },
+  ];
+
+  return columns;
+};
+export const getArticleColumns = (): ColumnDef<any>[] => {
+  const columns: ColumnDef<any>[] = [
+    {
+      accessorKey: "image",
+      header: "IMAGE",
+      cell: ({ row }) => {
+        const image = row.original.image;
+        return (
+          <img src={image} alt="image" className="w-16 h-1w-16 rounded-sm" />
+        );
+      },
+    },
+    {
+      accessorKey: "title",
+      header: "TITLE",
+      cell: ({ row }) => {
+        const title = row.original.title;
+        return <p>{title?.slice(0, 50)}</p>;
+      },
+    },
+    {
+      accessorKey: "description",
+      header: "DESCRIPTION",
+      cell: ({ row }) => {
+        const description = row.original.description;
+        return <p>{description?.slice(0, 50)}</p>;
+      },
+    },
+    {
+      header: "ACTION",
+      id: "actions",
+      cell: ({ row }: any) => <ArticleCell data={row.original} />,
     },
   ];
 

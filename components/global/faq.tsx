@@ -33,7 +33,7 @@ const Faqs = () => {
           <div className="relative w-full lg:w-1/2 flex flex-col items-center sm:flex-none">
             <div className="relative about-img flex-1 w-full mx-auto md:max-w-[500px] h-[300px] overflow-hidden group rounded-md bg-blue-50">
               <Image
-                src="/doc-2.png"
+                src="/doc-9.jpg"
                 width="0"
                 height="0"
                 quality={100}
@@ -58,7 +58,7 @@ const Faqs = () => {
               </p>
               <Button
                 onClick={handleEmail}
-                className=" text-white hover:text-secondary px-4 py-2 rounded-lg bg-secondary hover:bg-white"
+                className="text-black px-4 py-2 rounded-lg bg-secondary hover:bg-white"
               >
                 Send Now
               </Button>

@@ -5,7 +5,6 @@ import { Heading } from "./heading";
 import { DataTable } from "./data-table";
 import { AddAppointmentModal } from "./add-appointment-modal";
 import { useAppContext } from "@/lib/context";
-import { EditAppointmentModal } from "./edit-appointment-modal";
 
 export const Appointments: React.FC<any> = ({ data }) => {
   const { user } = useAppContext();
@@ -22,7 +21,8 @@ export const Appointments: React.FC<any> = ({ data }) => {
       </div>
       <Separator />
       <DataTable
-        searchKey="patientName"
+        viewSearchKey="Next Appointment Date"
+        searchKey="nextAppointmentDate"
         columns={getAppointmentColumns(user?.role)}
         data={data}
       />
