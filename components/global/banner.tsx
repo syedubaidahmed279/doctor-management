@@ -35,7 +35,7 @@ const Banner = () => {
           <MoreBtn to="about" label="READ MORE" />
         </div>
 
-        <img src="/doc-8.png" alt="doc" className="-mb-36" />
+        <img src="/doc-8.png" alt="doc" className="-mb-4 sm:w-[450px]" />
       </div>
     </div>
   );

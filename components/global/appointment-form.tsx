@@ -13,7 +13,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
+import { format, formatISO, parse } from "date-fns";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
@@ -29,7 +29,10 @@ export default function AppointmentForm({ onSubmit, loading, data }: any) {
   const defaultValues = {
     patientName: data?.patientName || "",
     phone: data?.phone || "",
-    nextAppointmentDate: data?.nextAppointmentDate || "",
+    nextAppointmentDate:
+      formatISO(
+        parse(data?.nextAppointmentDate, "MMMM do, yyyy", new Date())
+      ) || "",
     fee: data?.fee || "",
   };
 
