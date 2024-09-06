@@ -47,10 +47,7 @@ export const AppointmentCellAction: React.FC<any> = ({ data }) => {
       body: [
         ["Patient Name", data.patientName],
         ["Phone Number", data.phone],
-        [
-          "Next Appointment Date",
-          format(new Date(data.nextAppointmentDate), "PPP"),
-        ],
+        ["Next Appointment Date", data.nextAppointmentDate],
         ["Fee", data.fee],
       ],
       styles: {

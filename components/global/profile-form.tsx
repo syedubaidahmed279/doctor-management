@@ -26,7 +26,7 @@ export default function ProfileForm({
     speciality: z.string(),
     hospitalName: z.string(),
     phone: z.string(),
-    // image: z.any(),
+    image: z.any(),
   });
 
   const defaultValues = {
@@ -34,7 +34,7 @@ export default function ProfileForm({
     speciality: user?.speciality || "",
     hospitalName: user?.hospitalName || "",
     phone: user?.phone || "",
-    // image: "",
+    image: "",
   };
 
   const form = useForm({
@@ -42,16 +42,16 @@ export default function ProfileForm({
     defaultValues,
   });
 
-  //   const { watch } = form;
-  //   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const { watch } = form;
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  //   const watchedFields = watch(["name"]);
+  const watchedFields = watch(["name"]);
 
-  //   useEffect(() => {
-  //     const isFormEmpty = watchedFields[0] || image;
+  useEffect(() => {
+    const isFormEmpty = watchedFields[0] || image;
 
-  //     setIsSubmitDisabled(isFormEmpty);
-  //   }, [watchedFields, image]);
+    setIsSubmitDisabled(isFormEmpty);
+  }, [watchedFields, image]);
 
   return (
     <Form {...form}>
@@ -113,7 +113,7 @@ export default function ProfileForm({
           )}
         />
 
-        {/* <FormField
+        <FormField
           control={form.control}
           name="image"
           render={({ field }) => {
@@ -123,6 +123,7 @@ export default function ProfileForm({
                 <FormControl>
                   <Input
                     type="file"
+                    disabled={loading}
                     onChange={(e) => setImage(e.target.files?.[0])}
                   />
                 </FormControl>
@@ -130,7 +131,7 @@ export default function ProfileForm({
               </FormItem>
             );
           }}
-        /> */}
+        />
         <Button type="submit" disabled={loading}>
           {loading ? "Updating" : "Update"}
         </Button>

@@ -5,6 +5,7 @@ import { AppointmentCellAction } from "./appointment-cell-action";
 import { format } from "date-fns";
 import { DoctorsCellAction } from "./doctors-cell-action";
 import { ArticleCell } from "./article-cell";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
@@ -52,6 +53,18 @@ export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
 
 export const getDoctorsColumns = (): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
+    {
+      accessorKey: "image",
+      header: "IMAGE",
+      cell: ({ row }) => {
+        const image = row.original.image;
+        return (
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={image ?? ""} alt={"image"} />
+          </Avatar>
+        );
+      },
+    },
     {
       accessorKey: "name",
       header: "DOCTORS NAME",

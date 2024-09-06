@@ -21,11 +21,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return redirect("/");
   }
 
-  if (user?.role === "admin" && path === "/doctors-dashboard") {
+  if (user?.role === "admin" && path.includes("doctors-dashboard")) {
     return redirect("/admin-dashboard");
   }
 
-  if (user?.role === "doctor" && path === "/admin-dashboard") {
+  if (user?.role === "doctor" && path.includes("admin-dashboard")) {
     return redirect("/doctors-dashboard");
   }
 

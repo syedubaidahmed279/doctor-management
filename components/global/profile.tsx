@@ -15,11 +15,23 @@ export default function Profile() {
   const { user, setUserRefetch, userRefetch } = useAppContext();
   const onSubmit = async (data: any) => {
     setLoading(true);
+
+    data.image = image;
+    console.log({ data });
     try {
-      //   const formData = new FormData();
-      //   formData.append("image", image);
-      //   formData.append("name", data?.name);
-      const promise = await api.patch(`/users/update/${user?._id}`, data);
+      const formData = new FormData();
+
+      for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const value = data[key];
+          formData.append(key, value);
+        }
+      }
+      const promise = await api.patch(`/users/update/${user?._id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (promise.status === 200) {
         setUserRefetch(!userRefetch);
 
@@ -41,7 +53,7 @@ export default function Profile() {
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
             <AvatarImage alt="@shadcn" src={user?.image} />
-            <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
+            <AvatarFallback className="text-xs">loading..</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-lg font-medium">
