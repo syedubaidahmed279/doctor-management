@@ -35,7 +35,6 @@ export default function Login() {
   const { userRefetch, setUserRefetch } = useAppContext();
 
   const handleSubmit = async (data: any) => {
-    console.log("insidee");
     try {
       const promise = await api.post(`/users/signin`, data);
       if (promise.status === 200) {

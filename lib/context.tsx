@@ -37,8 +37,6 @@ const ContextProvider = ({ children }: any) => {
     setIsMinimized((prevState) => !prevState);
   }, []);
 
-  // console.log({ user });
-
   useEffect(() => {
     try {
       const getAllUsers = async () => {
