@@ -14,6 +14,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/lib/context";
+import Link from "next/link";
 
 export default function AuthForm({
   inputFields,
@@ -98,6 +99,17 @@ export default function AuthForm({
             )}
           />
         ))}
+
+        {submitButtonText === "Login" && (
+          <div>
+            <Link
+              href="/forgot-password"
+              className="text-center text-sm text-muted-foreground mt-1.5 hover:underline"
+            >
+              Forgot password?{" "}
+            </Link>
+          </div>
+        )}
 
         <Button
           disabled={loading}

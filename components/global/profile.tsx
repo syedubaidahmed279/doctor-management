@@ -16,8 +16,8 @@ export default function Profile() {
   const onSubmit = async (data: any) => {
     setLoading(true);
 
-    data.image = image;
-    console.log({ data });
+    data.image = image ? image : user?.image;
+
     try {
       const formData = new FormData();
 

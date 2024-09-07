@@ -27,6 +27,7 @@ export default function ProfileForm({
     hospitalName: z.string(),
     phone: z.string(),
     image: z.any(),
+    password: z.string(),
   });
 
   const defaultValues = {
@@ -34,7 +35,8 @@ export default function ProfileForm({
     speciality: user?.speciality || "",
     hospitalName: user?.hospitalName || "",
     phone: user?.phone || "",
-    image: "",
+    image: user?.image || "",
+    password: "",
   };
 
   const form = useForm({
@@ -132,6 +134,23 @@ export default function ProfileForm({
             );
           }}
         />
+
+        {user?.role === "admin" && (
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Update password</FormLabel>
+                <FormControl>
+                  <Input disabled={loading} {...field} type="password" />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
         <Button type="submit" disabled={loading}>
           {loading ? "Updating" : "Update"}
         </Button>
