@@ -5,6 +5,7 @@ import Faqs from "@/components/global/faq";
 
 import Footer from "@/components/global/footer";
 import Onboard from "@/components/global/onboard";
+import Pricing from "@/components/global/pricing";
 
 import React from "react";
 
@@ -16,17 +17,7 @@ const Home = () => {
       <ChooseUs />
       <Onboard />
       <Faqs />
-      {/* <About />
-      <Projects />
-      <ChooseUs />
-      <Onboard />
-      <Technologies />
-      <Employees />
-      <ServiceArea />
-      <Testimonials />
-      <Partners />
       <Pricing />
-      <Faqs /> */}
     </div>
   );
 };

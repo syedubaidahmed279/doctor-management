@@ -1,4 +1,12 @@
-import { BriefcaseMedical, Newspaper, Stethoscope, User } from "lucide-react";
+import {
+  BookUser,
+  BriefcaseMedical,
+  FileClock,
+  Newspaper,
+  NotebookPen,
+  Stethoscope,
+  User,
+} from "lucide-react";
 
 export const faqItems = [
   {
@@ -112,5 +120,46 @@ export const users = [
     patientName: "Patient Name",
     phone: "Patient Phone Number",
     nextAppointmentDate: "Next Appointment Date",
+  },
+];
+
+export const standardPackages = [
+  {
+    price: "500",
+    type: "Basic Package",
+    features: [
+      "UI/UX Design",
+      "Front-End Development",
+      "Basic Back-End Integration",
+      "Single Platform Support",
+      "Standard Security Features",
+    ],
+    icon: <FileClock className="text-white w-[45px] h-[45px] -mb-5" />,
+  },
+  {
+    price: "1,500",
+    type: "Standard Package",
+    features: [
+      "All Basic Package Services",
+      "Advanced Back-End Development",
+      "Custom API Integrations",
+      "Responsive Design for Multiple Devices",
+      "Basic AI Chatbot Integration",
+      "Hosting Included",
+      "Admin Panel and Dashboard",
+    ],
+    icon: <NotebookPen className="text-white w-[45px] h-[45px] -mb-5" />,
+  },
+  {
+    price: "4,500",
+    type: "Premium Package",
+    features: [
+      "All Standard Package Services",
+      "Advanced AI Solutions",
+      "Extended Support and Maintenance",
+      "Enhanced Security and Compliance",
+      "DevOps Support",
+    ],
+    icon: <BookUser className="text-white w-[45px] h-[45px] -mb-5" />,
   },
 ];
