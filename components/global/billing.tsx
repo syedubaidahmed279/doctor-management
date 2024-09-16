@@ -3,10 +3,12 @@ import { Separator } from "@/components/ui/separator";
 import { getBillingColumns } from "./columns";
 import { Heading } from "./heading";
 import { DataTable } from "./data-table";
+import { AddBillingModal } from "./add-billing-modal";
 import { useAppContext } from "@/lib/context";
 
 export const Billing: React.FC<any> = ({ data }) => {
   const { user } = useAppContext();
+
   return (
     <>
       <div className="flex sm:flex-row flex-col gap-4 items-start justify-between">
@@ -16,7 +18,7 @@ export const Billing: React.FC<any> = ({ data }) => {
         />
       </div>
       <Separator />
-      {user?.role === "doctor" && <AddBillingModal />}
+      {user?.role === "admin" && <AddBillingModal />}
       {data?.length > 0 ? (
         <DataTable
           viewSearchKey="Amount"
