@@ -132,3 +132,28 @@ export const getArticleColumns = (): ColumnDef<any>[] => {
 
   return columns;
 };
+
+
+export const getBillingColumns = (): ColumnDef<any>[] => {
+  const columns: ColumnDef<any>[] = [
+    {
+      id: "slNo",
+      header: "SL No",
+      cell: ({ row }) => row.index + 1,
+    },
+    {
+      accessorKey: "itemName",
+      header: "ITEM NAME",
+    },
+    {
+      accessorKey: "quantity",
+      header: "QUANTITY",
+    },
+    {
+      accessorKey: "amount",
+      header: "AMOUNT",
+    },
+  ];
+
+  return columns;
+};

@@ -74,6 +74,12 @@ export const footerItems = [
 
 export const navItems = [
   {
+    title: "Billings",
+    href: "/doctors-dashboard/billings",
+    icon: <Stethoscope className="size-5 flex-none" />,
+    label: "Billings",
+  },
+  {
     title: "Appointments",
     href: "/doctors-dashboard",
     icon: <Stethoscope className="size-5 flex-none" />,
@@ -123,42 +129,49 @@ export const users = [
   },
 ];
 
+//TODO: must change plan Id
+
 export const standardPackages = [
   {
-    price: "500",
+    price: "1,499",
+    billing: "Monthly",
     type: "Basic Package",
+    planId: "plan_OwKyxAtkqbfFH",
+
     features: [
-      "UI/UX Design",
-      "Front-End Development",
-      "Basic Back-End Integration",
-      "Single Platform Support",
-      "Standard Security Features",
+      "Record patient data, including name, phone number, and next appointment date",
+      "Appointment reminders via our executive call support team",
+      "Growth analysis and support from our team of experts",
+      "Patient review and feedback collection",
+      "Doctor performance tracking and rewards",
     ],
     icon: <FileClock className="text-white w-[45px] h-[45px] -mb-5" />,
   },
   {
-    price: "1,500",
-    type: "Standard Package",
+    price: "8,994",
+    discount: "10%",
+    billing: "Semi-Annual",
+    type: "Semi-Annual Package",
+    planId: "plan_OwKyxAtkqbfFi",
     features: [
-      "All Basic Package Services",
-      "Advanced Back-End Development",
-      "Custom API Integrations",
-      "Responsive Design for Multiple Devices",
-      "Basic AI Chatbot Integration",
-      "Hosting Included",
-      "Admin Panel and Dashboard",
+      "All features from the 1-month plan",
+      "Patient data analytics and insights",
+      "Customized patient engagement campaigns",
+      "Priority customer support",
     ],
     icon: <NotebookPen className="text-white w-[45px] h-[45px] -mb-5" />,
   },
   {
-    price: "4,500",
-    type: "Premium Package",
+    price: "17,988",
+    billing: "Annual",
+    discount: "20%",
+    type: "Annual Package",
+    planId: "plan_OwKyxAtkqbfFiH",
     features: [
-      "All Standard Package Services",
-      "Advanced AI Solutions",
-      "Extended Support and Maintenance",
-      "Enhanced Security and Compliance",
-      "DevOps Support",
+      "All features from the 6-month plan",
+      "Dedicated account manager",
+      "Advanced patient data analytics and insights",
+      "Complimentary listing on our doctor directory",
     ],
     icon: <BookUser className="text-white w-[45px] h-[45px] -mb-5" />,
   },

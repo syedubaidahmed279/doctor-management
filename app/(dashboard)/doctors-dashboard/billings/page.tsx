@@ -6,7 +6,7 @@ import { useAppContext } from "@/lib/context";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 
-const AdminBilling = () => {
+const DoctorBilling = () => {
   const { billing } = useAppContext();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -24,4 +24,4 @@ const AdminBilling = () => {
   );
 };
 
-export default AdminBilling;
+export default DoctorBilling;
