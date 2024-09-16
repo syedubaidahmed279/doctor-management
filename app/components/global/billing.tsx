@@ -1,56 +1,118 @@
-"use client";
-
+/* eslint-disable react/no-unescaped-entities */
+import { Button } from "@/components/ui/button";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
-import React from "react";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Cash, Plus } from "lucide-react";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { useState } from "react";
+import api from "@/utils/axiosInstance";
+import { useAppContext } from "@/lib/context";
+import { toast } from "sonner";
 
-interface BillingProps {
-   any;
-}
+export function AddBillingModal() {
+  const [inputs, setInputs] = useState<any>({});
+  const [open, setOpen] = useState(false);
+  const { user, billingRefetch, setBillingRefetch } = useAppContext();
 
-const Billing: React.FC<BillingProps> = ({ data }) => {
-  const formattedData = data?.map((item: any) => ({
-    ...item,
-    createdAt: format(new Date(item.createdAt), "MM/dd/yyyy"),
-  }));
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    inputs.doctor = user?._id;
+
+    try {
+      const promise = await api.post(`/billing/create`, inputs);
+      if (promise.status === 200) {
+        setBillingRefetch(!billingRefetch);
+        setInputs({});
+        setOpen(false);
+        toast.success(`New billing added.`, {
+          position: "top-center",
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+
+      return toast.error(
+        error.response.data.message || `Failed to add new billing!`,
+        {
+          position: "top-center",
+        }
+      );
+    }
+  };
 
   return (
-    <Table className="w-full">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Patient Email</TableHead>
-          <TableHead className="text-right">Doctor Email</TableHead>
-          <TableHead className="text-right">Appointment Date</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-          <TableHead className="text-right">Status</TableHead>
-          <TableHead className="text-right">Created At</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {formattedData?.map((item: any) => (
-          <TableRow key={item._id}>
-            <TableCell className="font-medium">{item?.user?.email}</TableCell>
-            <TableCell className="text-right">
-              {item?.doctor?.email}
-            </TableCell>
-            <TableCell className="text-right">
-              {item?.appointmentDate}
-            </TableCell>
-            <TableCell className="text-right">{item?.amount}</TableCell>
-            <TableCell className="text-right">{item?.status}</TableCell>
-            <TableCell className="text-right">{item?.createdAt}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="text-xs md:text-sm">
+          <Plus className="mr-2 h-4 w-4" /> Add New Billing
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add new billing</DialogTitle>
+          <DialogDescription></DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="name" className="">
+              Patient Name
+            </Label>
+            <Input
+              id="name"
+              className=""
+              onChange={(e) =>
+                setInputs({ ...inputs, patientName: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="username" className="">
+              Phone Number
+            </Label>
+            <Input
+              type="number"
+              className=""
+              required
+              onChange={(e) => setInputs({ ...inputs, phone: e.target.value })}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="username" className="">
+              Amount
+            </Label>
+            <Input
+              type="number"
+              className=""
+              required
+              onChange={(e) => setInputs({ ...inputs, amount: e.target.value })}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="username" className="">
+              Payment Method
+            </Label>
+            <Input
+              className=""
+              required
+              onChange={(e) =>
+                setInputs({ ...inputs, paymentMethod: e.target.value })
+              }
+            />
+          </div>
+          <DialogFooter>
+            <Button type="submit">Add</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
-};
-
-export { Billing };
+}
