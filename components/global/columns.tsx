@@ -150,6 +150,15 @@ export const getBillingColumns = (): ColumnDef<any>[] => {
       header: "Phone Number",
     },
     {
+      accessorKey: "email",
+      header: "Email",
+    },
+    {
+      accessorKey: "date",
+      header: "Issue Date",
+    },
+
+    {
       accessorKey: "items",
       header: "Items",
       cell: ({ row }) => {

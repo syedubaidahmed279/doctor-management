@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { CalendarIcon, Plus } from "lucide-react";
+import { CalendarIcon, Plus, Trash } from "lucide-react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -29,7 +29,9 @@ import {
 } from "../ui/select";
 
 export function AddBillingModal() {
-  const [inputs, setInputs] = useState<any>({ items: [] });
+  const [inputs, setInputs] = useState<any>({
+    items: [{ name: "", amount: "" }],
+  });
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<any>();
   const { user, billingRefetch, setBillingRefetch, appointments } =
@@ -39,13 +41,9 @@ export function AddBillingModal() {
     (appointment: any) => appointment?.doctor?.email === user?.email
   );
 
-  console.log(appointmentsData);
-
   const patientNames = appointmentsData?.map(
     (appointment: any) => appointment?.patientName
   );
-
-  console.log(inputs);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -54,6 +52,7 @@ export function AddBillingModal() {
 
     try {
       const promise = await api.post(`/billing/create`, inputs);
+
       if (promise.status === 200) {
         setBillingRefetch(!billingRefetch);
         setInputs({ items: [] });
@@ -64,13 +63,10 @@ export function AddBillingModal() {
       }
     } catch (error: any) {
       console.log(error);
-
-      return toast.error(
-        error.response.data.message || `Failed to add new billing!`,
-        {
-          position: "top-center",
-        }
-      );
+      setInputs({ items: [] });
+      return toast.error(`Failed to add new billing!`, {
+        position: "top-center",
+      });
     }
   };
 
@@ -84,6 +80,12 @@ export function AddBillingModal() {
   const handleInputChange = (index: number, field: string, value: string) => {
     const updatedItems = [...inputs.items];
     updatedItems[index][field] = value;
+    setInputs({ ...inputs, items: updatedItems });
+  };
+
+  const handleDeleteItem = (index: number) => {
+    const updatedItems = [...inputs.items];
+    updatedItems.splice(index, 1);
     setInputs({ ...inputs, items: updatedItems });
   };
 
@@ -119,15 +121,64 @@ export function AddBillingModal() {
             </Select>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="username" className="">
-              Phone Number
-            </Label>
             <Input
+              id="phoneNumber"
               type="number"
               className=""
-              required
-              onChange={(e) => setInputs({ ...inputs, phone: e.target.value })}
+              placeholder="Phone Number"
+              required //phone number must be more than 8 digit
+              onChange={(e) =>
+                setInputs({ ...inputs, phoneNumber: e.target.value })
+              }
             />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Input
+              id="email"
+              type="email"
+              className=""
+              placeholder="Email"
+              required //required for razorpay to send invoice to the email
+              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+            />
+          </div>
+
+          <div className="grid gap-4">
+            {inputs.items.map((item: any, index: number) => (
+              <div key={index} className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder="Item Name"
+                    className="flex-1"
+                    value={item.name}
+                    onChange={(e) =>
+                      handleInputChange(index, "name", e.target.value)
+                    }
+                    required
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Amount"
+                    className="flex-1"
+                    value={item.amount}
+                    onChange={(e) =>
+                      handleInputChange(index, "amount", e.target.value)
+                    }
+                    required
+                  />
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleDeleteItem(index)}
+                  >
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+            <Button variant="outline" onClick={handleAddItem}>
+              Add Item
+            </Button>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="username" className="">
@@ -156,35 +207,6 @@ export function AddBillingModal() {
                 />
               </PopoverContent>
             </Popover>
-          </div>
-          <div className="grid gap-4">
-            {inputs.items.map((item: any, index: number) => (
-              <div key={index} className="flex flex-col gap-2">
-                <div className="flex gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Item Name"
-                    className="flex-1"
-                    value={item.name}
-                    onChange={(e) =>
-                      handleInputChange(index, "name", e.target.value)
-                    }
-                  />
-                  <Input
-                    type="number"
-                    placeholder="Amount"
-                    className="flex-1"
-                    value={item.amount}
-                    onChange={(e) =>
-                      handleInputChange(index, "amount", e.target.value)
-                    }
-                  />
-                </div>
-              </div>
-            ))}
-            <Button variant="outline" onClick={handleAddItem}>
-              Add Item
-            </Button>
           </div>
           <DialogFooter>
             <Button type="submit">Add</Button>

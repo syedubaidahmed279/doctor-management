@@ -17,7 +17,7 @@ const Home = () => {
       <ChooseUs />
       <Onboard />
       <Faqs />
-      <Pricing />
+    
     </div>
   );
 };

@@ -28,6 +28,8 @@ const ContextProvider = ({ children }: any) => {
 
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [billings, setBillings] = useState([]);
+  const [billingRefetch, setBillingRefetch] = useState(false);
   const [articles, setArticles] = useState([]);
   const [doctors, setDoctors] = useState([]);
 
@@ -62,6 +64,24 @@ const ContextProvider = ({ children }: any) => {
       console.log(error);
     }
   }, [appointmentRefetch]);
+  useEffect(() => {
+    try {
+      const getAllBillings = async () => {
+        const response = await api.get(
+          `/billing?userId=${user?._id}&role=${user?.role}`
+        );
+
+        console.log(response?.data?.data);
+        setBillings(response?.data?.data);
+      };
+      if (user) {
+        console.log(user);
+        getAllBillings();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [billingRefetch, user?._id, user?.role]);
 
   useEffect(() => {
     try {
@@ -125,6 +145,9 @@ const ContextProvider = ({ children }: any) => {
     setArticles,
     articlesRefetch,
     setArticlesRefetch,
+    billings,
+    billingRefetch,
+    setBillingRefetch,
   };
 
   return (

@@ -2,8 +2,10 @@ import {
   BookUser,
   BriefcaseMedical,
   FileClock,
+  Layers,
   Newspaper,
   NotebookPen,
+  ReceiptText,
   Stethoscope,
   User,
 } from "lucide-react";
@@ -76,7 +78,7 @@ export const navItems = [
   {
     title: "Billings",
     href: "/doctors-dashboard/billings",
-    icon: <Stethoscope className="size-5 flex-none" />,
+    icon: <ReceiptText className="size-5 flex-none" />,
     label: "Billings",
   },
   {
@@ -91,6 +93,12 @@ export const navItems = [
     icon: <User className="size-5 flex-none" />,
     label: "Profile",
   },
+  {
+    title: "Packages",
+    href: "/packages",
+    icon: <Layers className="size-5 flex-none" />,
+    label: "Profile",
+  },
 ];
 
 export const navItemsAdmin = [
@@ -99,6 +107,12 @@ export const navItemsAdmin = [
     href: "/admin-dashboard",
     icon: <BriefcaseMedical className="size-5 flex-none" />,
     label: "Doctors",
+  },
+  {
+    title: "Billings",
+    href: "/admin-dashboard/billings",
+    icon: <ReceiptText className="size-5 flex-none" />,
+    label: "Billings",
   },
   {
     title: "Appointments",
@@ -136,7 +150,7 @@ export const standardPackages = [
     price: "1,499",
     billing: "Monthly",
     type: "Basic Package",
-    planId: "plan_OwKyxAtkqbfFH",
+    planId: "plan_Ow9kb9CFrBeip9",
 
     features: [
       "Record patient data, including name, phone number, and next appointment date",
@@ -152,7 +166,7 @@ export const standardPackages = [
     discount: "10%",
     billing: "Semi-Annual",
     type: "Semi-Annual Package",
-    planId: "plan_OwKyxAtkqbfFi",
+    planId: "plan_OwKy4CjPTcjS8k",
     features: [
       "All features from the 1-month plan",
       "Patient data analytics and insights",

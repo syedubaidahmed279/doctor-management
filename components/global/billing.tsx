@@ -9,6 +9,8 @@ import { useAppContext } from "@/lib/context";
 export const Billing: React.FC<any> = ({ data }) => {
   const { user } = useAppContext();
 
+  console.log(data);
+
   return (
     <>
       <div className="flex sm:flex-row flex-col gap-4 items-start justify-between">
@@ -16,13 +18,14 @@ export const Billing: React.FC<any> = ({ data }) => {
           title={`Billing (${data?.length > 0 ? data.length : "0"})`}
           description="Manage Billing"
         />
+        {user?.role === "doctor" && <AddBillingModal />}
       </div>
       <Separator />
-      {user?.role === "admin" && <AddBillingModal />}
+
       {data?.length > 0 ? (
         <DataTable
-          viewSearchKey="Amount"
-          searchKey="amount"
+          viewSearchKey="Patient Name"
+          searchKey="patientName"
           columns={getBillingColumns()}
           data={data}
         />
