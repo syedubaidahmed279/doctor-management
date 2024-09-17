@@ -20,12 +20,32 @@ import { useState } from "react";
 import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export function AddBillingModal() {
   const [inputs, setInputs] = useState<any>({});
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<any>();
-  const { user, billingRefetch, setBillingRefetch } = useAppContext();
+  const { user, billingRefetch, setBillingRefetch, appointments } =
+    useAppContext();
+
+  const appointmentsData = appointments?.filter(
+    (appointment: any) => appointment?.doctor?.email === user?.email
+  );
+
+  console.log(appointmentsData);
+
+  const patientNames = appointmentsData?.map(
+    (appointment: any) => appointment?.patientName
+  );
+
+  console.log(inputs);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -68,17 +88,22 @@ export function AddBillingModal() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="name" className="">
-              Patient Name
-            </Label>
-            <Input
-              id="name"
-              className=""
-              onChange={(e) =>
-                setInputs({ ...inputs, patientName: e.target.value })
+            <Select
+              onValueChange={(value) =>
+                setInputs({ ...inputs, patientName: value })
               }
-              required
-            />
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a patient" />
+              </SelectTrigger>
+              <SelectContent>
+                {patientNames?.map((patientName: string) => (
+                  <SelectItem key={patientName} value={patientName}>
+                    {patientName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="username" className="">
