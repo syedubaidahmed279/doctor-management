@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { DoctorsCellAction } from "./doctors-cell-action";
 import { ArticleCell } from "./article-cell";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { BillingCell } from "./billing-cell";
 
 export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
@@ -176,6 +177,11 @@ export const getBillingColumns = (): ColumnDef<any>[] => {
           </div>
         );
       },
+    },
+    {
+      header: "ACTION",
+      id: "actions",
+      cell: ({ row }: any) => <BillingCell data={row.original} />,
     },
   ];
 
