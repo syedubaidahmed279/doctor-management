@@ -29,7 +29,7 @@ import {
 } from "../ui/select";
 
 export function AddBillingModal() {
-  const [inputs, setInputs] = useState<any>({});
+  const [inputs, setInputs] = useState<any>({ items: [] });
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<any>();
   const { user, billingRefetch, setBillingRefetch, appointments } =
@@ -56,7 +56,7 @@ export function AddBillingModal() {
       const promise = await api.post(`/billing/create`, inputs);
       if (promise.status === 200) {
         setBillingRefetch(!billingRefetch);
-        setInputs({});
+        setInputs({ items: [] });
         setOpen(false);
         toast.success(`New billing added.`, {
           position: "top-center",
@@ -72,6 +72,19 @@ export function AddBillingModal() {
         }
       );
     }
+  };
+
+  const handleAddItem = () => {
+    setInputs({
+      ...inputs,
+      items: [...inputs.items, { name: "", amount: "" }],
+    });
+  };
+
+  const handleInputChange = (index: number, field: string, value: string) => {
+    const updatedItems = [...inputs.items];
+    updatedItems[index][field] = value;
+    setInputs({ ...inputs, items: updatedItems });
   };
 
   return (
@@ -144,16 +157,34 @@ export function AddBillingModal() {
               </PopoverContent>
             </Popover>
           </div>
-          <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="username" className="">
-              Amount
-            </Label>
-            <Input
-              type="number"
-              className=""
-              required
-              onChange={(e) => setInputs({ ...inputs, amount: e.target.value })}
-            />
+          <div className="grid gap-4">
+            {inputs.items.map((item: any, index: number) => (
+              <div key={index} className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder="Item Name"
+                    className="flex-1"
+                    value={item.name}
+                    onChange={(e) =>
+                      handleInputChange(index, "name", e.target.value)
+                    }
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Amount"
+                    className="flex-1"
+                    value={item.amount}
+                    onChange={(e) =>
+                      handleInputChange(index, "amount", e.target.value)
+                    }
+                  />
+                </div>
+              </div>
+            ))}
+            <Button variant="outline" onClick={handleAddItem}>
+              Add Item
+            </Button>
           </div>
           <DialogFooter>
             <Button type="submit">Add</Button>
