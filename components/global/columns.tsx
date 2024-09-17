@@ -133,7 +133,6 @@ export const getArticleColumns = (): ColumnDef<any>[] => {
   return columns;
 };
 
-
 export const getBillingColumns = (): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
     {
@@ -142,16 +141,41 @@ export const getBillingColumns = (): ColumnDef<any>[] => {
       cell: ({ row }) => row.index + 1,
     },
     {
-      accessorKey: "itemName",
-      header: "ITEM NAME",
+      accessorKey: "patientName",
+      header: "Patient Name",
     },
     {
-      accessorKey: "quantity",
-      header: "QUANTITY",
+      accessorKey: "phoneNumber",
+      header: "Phone Number",
     },
     {
-      accessorKey: "amount",
-      header: "AMOUNT",
+      accessorKey: "items",
+      header: "Items",
+      cell: ({ row }) => {
+        const totalCost = row.original.items.reduce(
+          (acc: number, item: any) => {
+            return acc + item.amount;
+          },
+          0
+        );
+        return (
+          <div className="flex flex-col gap-1">
+            {row.original.items?.map((item: any, index: number) => (
+              <div
+                key={index}
+                className="flex items-center justify-between w-full gap-5 border-b border-gray-200 py-2 px-4"
+              >
+                <span className="text-gray-700">{item.name}</span>
+                <span className="text-gray-500">₹{item.amount}</span>
+              </div>
+            ))}
+            <div className="flex items-center justify-between w-full gap-5 px-4 py-2">
+              <span className="text-gray-700">total</span>
+              <span className="text-gray-500">₹{totalCost}</span>
+            </div>
+          </div>
+        );
+      },
     },
   ];
 
