@@ -1,15 +1,23 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
+import PaymentButton from "./razorpay/PaymentButton";
+import { useAppContext } from "@/lib/context";
 
 type Package = {
   price: string;
   type: string;
   features: string[];
   icon: JSX.Element;
+  billing: string;
+  discount?: string;
+  planId: string;
 };
 
 const PricingCard = ({ data }: { data: Package }) => {
+  const { user } = useAppContext();
+  console.log(user);
+  const subscription = user?.subscription;
   return (
     <div className="group bg-white hover:bg-primary transition-all duration-500 shadow-sm rounded-lg max-w-md w-full mx-auto h-full border border-gray-100">
       <h2
@@ -17,15 +25,15 @@ const PricingCard = ({ data }: { data: Package }) => {
           "text-[50px] font-semibold mb-2 flex items-center px-7 py-3 group-hover:text-white"
         )}
       >
-        <sup className="text-[28px]">$</sup>
+        <sup className="text-[28px]">₹</sup>
         {data?.price}
-        <sup className="text-[28px]">k</sup>
+        {data?.discount && <sup className="text-xs">Save {data?.discount}</sup>}
         <sub
           className={cn(
-            "text-sm font-bold text-black group-hover:text-white -mb-5 -ml-3"
+            "text-sm font-bold text-black group-hover:text-white -mb-5 "
           )}
         >
-          / MONTHLY
+          / {data.billing}
         </sub>
       </h2>
 
@@ -47,7 +55,7 @@ const PricingCard = ({ data }: { data: Package }) => {
         </Button>
       </div>
 
-      <div className="px-7 py-8 relative">
+      <div className="px-7 py-8 relative flex flex-col justify-center items-center">
         <ul className="mb-6 text-muted-foreground group-hover:text-white">
           {data.features.map((feature, index) => (
             <li key={index} className="flex justify-between items-center mb-4 ">
@@ -56,6 +64,15 @@ const PricingCard = ({ data }: { data: Package }) => {
             </li>
           ))}
         </ul>
+        <div className="">
+          {user && subscription && subscription?.planId === data?.planId ? (
+            <p className="text-green-600 px-8 py-4 rounded shadow-lg font-bold bg-white">
+              SUBSCRIBED!
+            </p>
+          ) : (
+            <PaymentButton planId={data.planId} planName={data.type} />
+          )}
+        </div>
       </div>
     </div>
   );

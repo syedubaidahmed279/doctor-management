@@ -114,7 +114,7 @@ export function AddAppointmentModal() {
                   selected={date}
                   onSelect={setDate}
                   // initialFocus
-                  required
+                 
                 />
               </PopoverContent>
             </Popover>
