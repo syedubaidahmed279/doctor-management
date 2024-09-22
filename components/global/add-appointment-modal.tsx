@@ -68,6 +68,19 @@ export function AddAppointmentModal() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="doctorName" className="">
+              Doctor Name
+            </Label>
+            <Input
+              id="doctorName"
+              className=""
+              onChange={(e) =>
+                setInputs({ ...inputs, doctorName: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="name" className="">
               Patient Name
             </Label>
@@ -80,6 +93,7 @@ export function AddAppointmentModal() {
               required
             />
           </div>
+
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="username" className="">
               Phone Number
@@ -114,7 +128,6 @@ export function AddAppointmentModal() {
                   selected={date}
                   onSelect={setDate}
                   // initialFocus
-                 
                 />
               </PopoverContent>
             </Popover>

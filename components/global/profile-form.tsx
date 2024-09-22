@@ -28,7 +28,13 @@ export default function ProfileForm({
     phone: z.string(),
     image: z.any(),
     password: z.string(),
+    city: z.string(),
+    state: z.string(),
+
+    address: z.string(),
   });
+
+  console.log(user);
 
   const defaultValues = {
     name: user?.name || "",
@@ -37,6 +43,10 @@ export default function ProfileForm({
     phone: user?.phone || "",
     image: user?.image || "",
     password: "",
+    city: user?.hospitalAddress?.city || "",
+    state: user?.hospitalAddress?.state || "",
+
+    address: user?.hospitalAddress?.address || "",
   };
 
   const form = useForm({
@@ -47,7 +57,18 @@ export default function ProfileForm({
   const { watch } = form;
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
-  const watchedFields = watch(["name"]);
+  const watchedFields = watch([
+    "name",
+    "speciality",
+    "hospitalName",
+    "phone",
+    "image",
+    "password",
+    "city",
+    "state",
+
+    "address",
+  ]);
 
   useEffect(() => {
     const isFormEmpty = watchedFields[0] || image;
@@ -92,6 +113,46 @@ export default function ProfileForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Hospital Name</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>City</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="state"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>State</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
                   <FormControl>
                     <Input disabled={loading} {...field} />
                   </FormControl>

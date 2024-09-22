@@ -33,6 +33,34 @@ const registerFields = [
       .min(1, { message: "Hospital name has to be filled." }),
   },
   {
+    name: "hospitalAddress_city",
+    label: "Hospital City",
+    type: "text",
+    placeholder: "Enter city...",
+    validation: z.string().min(1, { message: "City has to be filled." }),
+  },
+  {
+    name: "hospitalAddress_state",
+    label: "Hospital State",
+    type: "text",
+    placeholder: "Enter state...",
+    validation: z.string().min(1, { message: "State has to be filled." }),
+  },
+  {
+    name: "hospitalAddress_pincode",
+    label: "Hospital Pincode",
+    type: "text",
+    placeholder: "Enter pincode...",
+    validation: z.string().min(1, { message: "Pincode has to be filled." }),
+  },
+  {
+    name: "hospitalAddress_address",
+    label: "Hospital Address",
+    type: "text",
+    placeholder: "Enter address...",
+    validation: z.string().min(1, { message: "Address has to be filled." }),
+  },
+  {
     name: "phone",
     label: "Phone number",
     type: "number",
@@ -77,9 +105,35 @@ export default function Signup() {
 
   const handleSubmit = async (data: any) => {
     try {
-      const promise = await api.post(`/users/signup`, data);
-      if (promise.status === 200) {
-        window.localStorage.setItem("dmToken", promise.data.data);
+      const formData = {
+        ...data, // Spread other form fields
+        hospitalAddress: {
+          city: data?.["hospitalAddress_city"] ?? "",
+          state: data?.["hospitalAddress_state"] ?? "",
+          pincode: data?.["hospitalAddress_pincode"] ?? "",
+          address: data?.["hospitalAddress_address"] ?? "",
+        },
+      };
+
+      delete formData["hospitalAddress_city"];
+      delete formData["hospitalAddress_state"];
+      delete formData["hospitalAddress_pincode"];
+      delete formData["hospitalAddress_address"];
+
+      if (
+        !formData.hospitalAddress.city ||
+        !formData.hospitalAddress.state ||
+        !formData.hospitalAddress.pincode ||
+        !formData.hospitalAddress.address
+      ) {
+        return toast.error("All fields are required", {
+          position: "top-center",
+        });
+      }
+
+      const promise = await api.post(`/users/signup`, formData);
+      if (promise?.status === 200) {
+        window.localStorage.setItem("dmToken", promise?.data?.data ?? "");
         setUserRefetch(!userRefetch);
         setTimeout(() => {
           toast.success(`Signed up`, {
@@ -89,9 +143,9 @@ export default function Signup() {
         }, 1000);
       }
     } catch (error: any) {
-      console.log(error);
+      console.error(error);
 
-      return toast.error(error.response.data.message || `Sign up failed`, {
+      return toast.error(error?.response?.data?.message || `Sign up failed`, {
         position: "top-center",
       });
     }
@@ -107,3 +161,4 @@ export default function Signup() {
     </Auth>
   );
 }
+

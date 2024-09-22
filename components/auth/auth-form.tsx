@@ -76,35 +76,49 @@ export default function AuthForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-2 w-full"
+        className="space-y-6 w-full" // Adjusted spacing
       >
-        {inputFields.map((input: any) => (
-          <FormField
-            key={input.name}
-            control={form.control}
-            name={input.name}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{input.label}</FormLabel>
-                <FormControl>
-                  <Input
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-xs" />
-              </FormItem>
-            )}
-          />
-        ))}
+        <div
+          className={`grid grid-cols-1 ${
+            inputFields.length > 2 ? "md:grid-cols-2" : "md:grid-cols-1"
+          } gap-6 md:gap-8`}
+        >
+          {" "}
+          {/* Two-column grid */}
+          {inputFields.map((input: any) => (
+            <div key={input.name}>
+              {" "}
+              {/* Wrap each field in a div */}
+              <FormField
+                control={form.control}
+                name={input.name}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium">
+                      {input.label}
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type={input.type}
+                        placeholder={input.placeholder}
+                        disabled={loading}
+                        {...field}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-xs text-red-600" />
+                  </FormItem>
+                )}
+              />
+            </div>
+          ))}
+        </div>
 
         {submitButtonText === "Login" && (
-          <div>
+          <div className="text-center">
             <Link
               href="/forgot-password"
-              className="text-center text-sm text-muted-foreground mt-1.5 hover:underline"
+              className="text-sm text-muted-foreground underline hover:text-primary-600 transition"
             >
               Forgot password?{" "}
             </Link>

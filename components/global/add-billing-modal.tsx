@@ -120,6 +120,19 @@ export function AddBillingModal() {
               </SelectContent>
             </Select>
           </div>
+          {/* add doctor name */}
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Input
+              id="doctorName"
+              type="text"
+              className=""
+              placeholder="Doctor Name"
+              required //required for razorpay to send invoice to the email
+              onChange={(e) =>
+                setInputs({ ...inputs, doctorName: e.target.value })
+              }
+            />
+          </div>
           <div className="flex flex-col justify-start items-start gap-2">
             <Input
               id="phoneNumber"

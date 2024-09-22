@@ -16,6 +16,10 @@ export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
       cell: ({ row }) => row.index + 1,
     },
     {
+      accessorKey: "doctorName",
+      header: "DOCTOR NAME",
+    },
+    {
       accessorKey: "patientName",
       header: "PATIENT NAME",
     },
@@ -58,17 +62,21 @@ export const getDoctorsColumns = (): ColumnDef<any>[] => {
       accessorKey: "image",
       header: "IMAGE",
       cell: ({ row }) => {
-        const image = row.original.image;
+        const image = row.original?.image ?? "";
         return (
           <Avatar className="h-8 w-8">
-            <AvatarImage src={image ?? ""} alt={"image"} />
+            <AvatarImage src={image} alt={"image"} />
           </Avatar>
         );
       },
     },
     {
-      accessorKey: "name",
+      accessorKey: "doctorName",
       header: "DOCTORS NAME",
+      cell: ({ row }) => {
+        const doctorName = row.original?.doctorName ?? row.original?.name ?? "";
+        return <p>{doctorName}</p>;
+      },
     },
     {
       accessorKey: "email",
@@ -90,7 +98,7 @@ export const getDoctorsColumns = (): ColumnDef<any>[] => {
     {
       header: "ACTION",
       id: "actions",
-      cell: ({ row }: any) => <DoctorsCellAction data={row.original} />,
+      cell: ({ row }: any) => <DoctorsCellAction data={row.original ?? {}} />,
     },
   ];
 
@@ -141,6 +149,37 @@ export const getBillingColumns = (): ColumnDef<any>[] => {
       header: "SL No",
       cell: ({ row }) => row.index + 1,
     },
+
+    //add hospitalName
+    {
+      accessorKey: "hospitalName",
+      header: "Hospital Name",
+      cell: ({ row }) => {
+        const hospitalName = row.original?.doctor?.hospitalName;
+        return <p>{hospitalName}</p>;
+      },
+    },
+
+    //add hospitalAddress
+    {
+      accessorKey: "hospitalAddress",
+      header: "Hospital Address",
+      cell: ({ row }) => {
+        console.log(row.original?.doctor);
+        const hospitalAddress = row.original?.doctor?.hospitalAddress;
+        if (!hospitalAddress) return <p>Not available</p>;
+        return (
+          <p>
+            {hospitalAddress.address}, {hospitalAddress.city},{" "}
+            {hospitalAddress.state}
+          </p>
+        );
+      },
+    },
+
+    //add doctorName
+    { accessorKey: "doctorName", header: "Doctor Name" },
+
     {
       accessorKey: "patientName",
       header: "Patient Name",
