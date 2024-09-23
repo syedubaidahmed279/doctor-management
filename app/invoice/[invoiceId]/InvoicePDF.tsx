@@ -1,7 +1,7 @@
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
-const styles = StyleSheet.create({
+const newStyles = StyleSheet.create({
   page: {
     padding: 30,
   },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 10,
     textAlign: "left",
-    flex: 1, // Distribute space evenly
+    width: "25%",
   },
   tableCell: {
     margin: "auto",
@@ -80,71 +80,105 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
   console.log(invoice);
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <Text style={styles.invoiceTitle}>Invoice</Text>
-          <View style={styles.hospitalDetails}>
-            <Text style={styles.label}>Hospital Name:</Text>
-            <Text style={styles.value}>{invoice?.doctor?.hospitalName}</Text>
+      <Page size="A4" style={newStyles.page}>
+        <View style={newStyles.header}>
+          <Text style={newStyles.invoiceTitle}>Invoice</Text>
+          <View style={newStyles.hospitalDetails}>
+            <Text style={newStyles.label}>Hospital Name:</Text>
+            <Text style={newStyles.value}>{invoice?.doctor?.hospitalName}</Text>
             {/* Add more hospital details as needed */}
           </View>
         </View>
 
-        <View style={styles.patientDetails}>
-          <View style={styles.detailItem}>
-            <Text style={styles.label}>Patient Name:</Text>
-            <Text style={styles.value}>{invoice?.patientName}</Text>
+        <View style={newStyles.patientDetails}>
+          <View style={newStyles.detailItem}>
+            <Text style={newStyles.label}>Patient Name:</Text>
+            <Text style={newStyles.value}>{invoice?.patientName}</Text>
           </View>
-          <View style={styles.detailItem}>
-            <Text style={styles.label}>Phone Number:</Text>
-            <Text style={styles.value}>{invoice?.phoneNumber}</Text>
+          <View style={newStyles.detailItem}>
+            <Text style={newStyles.label}>Phone Number:</Text>
+            <Text style={newStyles.value}>{invoice?.phoneNumber}</Text>
           </View>
-          <View style={styles.detailItem}>
-            <Text style={styles.label}>Email:</Text>
-            <Text style={styles.value}>{invoice?.email}</Text>
+          <View style={newStyles.detailItem}>
+            <Text style={newStyles.label}>Email:</Text>
+            <Text style={newStyles.value}>{invoice?.email}</Text>
           </View>
-          <View style={styles.detailItem}>
-            <Text style={styles.label}>Date:</Text>
-            <Text style={styles.value}>{invoice?.date}</Text>
+          <View style={newStyles.detailItem}>
+            <Text style={newStyles.label}>Date:</Text>
+            <Text style={newStyles.value}>{invoice?.date}</Text>
           </View>
           {/* Add more patient details as needed */}
         </View>
 
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <View style={styles.tableColHeader}>
+        <View style={newStyles.table}>
+          <View style={newStyles.tableRow}>
+            <View style={newStyles.tableColHeader}>
               <Text>Item Name</Text>
             </View>
-            <View style={styles.tableColHeader}>
+            <View style={newStyles.tableColHeader}>
               <Text>Description</Text>
             </View>
-            <View style={styles.tableColHeader}>
+            <View style={newStyles.tableColHeader}>
               <Text>Quantity</Text>
             </View>
-            <View style={styles.tableColHeader}>
+            <View style={newStyles.tableColHeader}>
               <Text>Amount</Text>
             </View>
           </View>
           {invoice?.items?.map((item: any, index: number) => (
-            <View style={styles.tableRow} key={item._id}>
-              <View style={styles.tableCol}>
+            <View style={newStyles.tableRow} key={item._id}>
+              <View style={newStyles.tableCol}>
                 <Text>{item.name}</Text>
               </View>
-              <View style={styles.tableCol}>
+              <View style={newStyles.tableCol}>
                 <Text>-</Text>
               </View>
-              <View style={styles.tableCol}>
+              <View style={newStyles.tableCol}>
                 <Text>1</Text>
               </View>
-              <View style={styles.tableCol}>
-                <Text>{item.amount}</Text>
+              <View style={newStyles.tableCol}>
+                <Text>₹{item.amount}</Text>
               </View>
             </View>
           ))}
+          <View style={newStyles.tableRow}>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}>
+              <Text style={styles.totalLabel}>Total:</Text>
+            </View>
+            <View style={newStyles.tableCol}>
+              <Text style={styles.totalAmount}>
+                ₹
+                {invoice?.items?.reduce(
+                  (acc: number, item: any) => acc + item.amount,
+                  0
+                )}
+              </Text>
+            </View>
+          </View>
         </View>
       </Page>
     </Document>
   );
 };
+
+const totalLabel = {
+  fontSize: 12,
+  fontWeight: "bold",
+};
+
+const totalAmount = {
+  fontSize: 12,
+  fontWeight: "bold",
+};
+
+const newStyles = StyleSheet.create({
+  ...styles,
+  totalLabel,
+  totalAmount,
+});
+
+export default InvoicePDF;
 
 export default InvoicePDF;
