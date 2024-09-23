@@ -8,7 +8,7 @@ const newStyles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start", // Align items to the top
+    alignItems: "flex-start",
     marginBottom: 20,
     borderBottom: "1px solid #ccc",
     paddingBottom: 10,
@@ -19,7 +19,7 @@ const newStyles = StyleSheet.create({
   },
   hospitalDetails: {
     flexDirection: "column",
-    alignItems: "flex-end", // Align to the right
+    alignItems: "flex-end",
   },
   label: {
     fontSize: 10,
@@ -37,7 +37,8 @@ const newStyles = StyleSheet.create({
     paddingBottom: 10,
   },
   detailItem: {
-    width: "50%",
+    display: "flex",
+    width: "50%", // Ensure patient details take up full width
     marginBottom: 5,
   },
   table: {
@@ -46,11 +47,10 @@ const newStyles = StyleSheet.create({
     marginTop: 20,
   },
   tableRow: {
-    display: "flex",
     flexDirection: "row",
     borderBottomWidth: 1,
     borderColor: "#ccc",
-    alignItems: "center",
+    alignItems: "center", // Align items vertically
   },
   tableColHeader: {
     padding: 8,
@@ -58,12 +58,13 @@ const newStyles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 10,
     textAlign: "left",
+    flexGrow: 1, // Allow columns to take available space
   },
   tableCol: {
     padding: 8,
     fontSize: 10,
     textAlign: "left",
-    width: "25%",
+    flexGrow: 1, // Allow columns to take available space
   },
   tableCell: {
     margin: "auto",
@@ -85,7 +86,6 @@ interface InvoiceProps {
 }
 
 const InvoicePDF = ({ invoice }: InvoiceProps) => {
-  console.log(invoice);
   return (
     <Document>
       <Page size="A4" style={newStyles.page}>
