@@ -153,22 +153,20 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
                 <Text>1</Text>
               </View>
               <View style={newStyles.tableCol}>
-                <Text>₹{item.amount}</Text>
+                <Text>Rs.{item.amount}</Text>
               </View>
             </View>
           ))}
           <View style={newStyles.tableRow}>
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}></View>
-            <View style={newStyles.tableCol}>
-              <Text style={newStyles.totalLabel}>Total:</Text>
-            </View>
+
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalLabel}>Total:</Text>
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                ₹{" "}
+                Rs. {" "}
                 {invoice?.items?.reduce(
                   (acc: number, item: any) => acc + item.amount,
                   0
@@ -184,11 +182,13 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                ₹{" "}
-                {(invoice?.items?.reduce(
-                  (acc: number, item: any) => acc + item.amount,
-                  0
-                ) * 0.1).toFixed(2)}
+                Rs.{" "}
+                {(
+                  invoice?.items?.reduce(
+                    (acc: number, item: any) => acc + item.amount,
+                    0
+                  ) * 0.1
+                ).toFixed(2)}
               </Text>
             </View>
           </View>
@@ -200,15 +200,17 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                ₹{" "}
-                {(invoice?.items?.reduce(
-                  (acc: number, item: any) => acc + item.amount,
-                  0
-                ) * 1.1).toFixed(2)}
+                Rs.{" "}
+                {(
+                  invoice?.items?.reduce(
+                    (acc: number, item: any) => acc + item.amount,
+                    0
+                  ) * 1.1
+                ).toFixed(2)}
               </Text>
             </View>
           </View>
-        </View> 
+        </View>
       </Page>
     </Document>
   );
