@@ -9,17 +9,9 @@ import {
 } from "@react-pdf/renderer";
 
 // Register fonts
-// Font.register({
-//   family: "Roboto",
-//   fonts: [
-//     { src: "/fonts/Roboto-Regular.ttf" },
-//     { src: "/fonts/Roboto-Bold.ttf", fontWeight: "bold" },
-//   ],
-// });
 
 const styles = StyleSheet.create({
   page: {
-    // fontFamily: "Roboto",
     padding: 30,
   },
   header: {
