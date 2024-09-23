@@ -8,7 +8,6 @@ import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 
 export const BillingCell: React.FC<any> = ({ data }) => {
-
   const router = useRouter();
   const { billingRefetch, setBillingRefetch } = useAppContext();
 
@@ -33,7 +32,7 @@ export const BillingCell: React.FC<any> = ({ data }) => {
   };
 
   const handleViewInvoice = (id: any) => {
-    router.push(`/billing/view-invoice/${id}`);
+    router.replace(`/invoice/${id}`);
   };
 
   const handleDelete = async (id: any) => {
@@ -52,26 +51,14 @@ export const BillingCell: React.FC<any> = ({ data }) => {
 
   return (
     <div className="flex gap-2">
-      {data?.invoice?.invoiceUrl ? (
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-7 text-xs"
-          onClick={() => window.open(data?.invoice?.invoiceUrl, "_blank")}
-        >
-          View Invoice
-        </Button>
-      ) : (
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-7 text-xs"
-          onClick={() => handleGenerateInvoice(data._id)}
-        >
-          Generate Invoice
-        </Button>
-      )}
-
+      <Button
+        variant="outline"
+        size="sm"
+        className="h-7 text-xs"
+        onClick={() => handleViewInvoice(data._id)}
+      >
+        View Invoice
+      </Button>
       <Button
         variant={"destructive"}
         color="red"
