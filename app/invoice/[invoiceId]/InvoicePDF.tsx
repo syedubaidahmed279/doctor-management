@@ -118,10 +118,16 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             <View style={newStyles.detailItem}>
               <Text style={newStyles.label}>Patient Name:</Text>
               <Text style={newStyles.value}>{invoice?.patientName}</Text>
+            </View>
+            <View style={newStyles.detailItem}>
               <Text style={newStyles.label}>Phone Number:</Text>
               <Text style={newStyles.value}>{invoice?.phoneNumber}</Text>
+            </View>
+            <View style={newStyles.detailItem}>
               <Text style={newStyles.label}>Email:</Text>
               <Text style={newStyles.value}>{invoice?.email}</Text>
+            </View>
+            <View style={newStyles.detailItem}>
               <Text style={newStyles.label}>Date:</Text>
               <Text style={newStyles.value}>{invoice?.date}</Text>
             </View>
