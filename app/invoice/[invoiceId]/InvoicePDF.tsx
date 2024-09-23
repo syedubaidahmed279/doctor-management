@@ -95,13 +95,19 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
           <View style={newStyles.hospitalDetails}>
             <Text style={newStyles.label}>Hospital Name:</Text>
             <Text style={newStyles.value}>{invoice?.doctor?.hospitalName}</Text>
-            <Text style={newStyles.value}>{invoice?.doctor?.hospitalAddress?.address}</Text>
-            <Text style={newStyles.value}>{invoice?.doctor?.hospitalAddress?.city}, {invoice?.doctor?.hospitalAddress?.state} - {invoice?.doctor?.hospitalAddress?.pincode}</Text>
+            <Text style={newStyles.value}>
+              {invoice?.doctor?.hospitalAddress?.address}
+            </Text>
+            <Text style={newStyles.value}>
+              {invoice?.doctor?.hospitalAddress?.city},{" "}
+              {invoice?.doctor?.hospitalAddress?.state} -{" "}
+              {invoice?.doctor?.hospitalAddress?.pincode}
+            </Text>
           </View>
         </View>
 
         <View style={newStyles.patientDetails}>
-          <View style={{...newStyles.detailItem, width: '100%'}}>
+          <View style={{ ...newStyles.detailItem, width: "100%" }}>
             <Text style={newStyles.label}>Patient Name: </Text>
             <Text style={newStyles.value}>{invoice?.patientName}</Text>
           </View>
@@ -158,14 +164,50 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
               <Text style={newStyles.totalLabel}>Total:</Text>
             </View>
             <View style={newStyles.tableCol}>
+              <Text style={newStyles.totalLabel}>Total:</Text>
+            </View>
+            <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                ₹
+                ₹{" "}
                 {invoice?.items?.reduce(
                   (acc: number, item: any) => acc + item.amount,
                   0
                 )}
               </Text>
             </View>
+          </View>
+          <View style={newStyles.tableRow}>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}>
+              <Text style={newStyles.totalLabel}>Tax (10%):</Text>
+            </View>
+            <View style={newStyles.tableCol}>
+              <Text style={newStyles.totalAmount}>
+                ₹{" "}
+                {(invoice?.items?.reduce(
+                  (acc: number, item: any) => acc + item.amount,
+                  0
+                ) * 0.1).toFixed(2)}
+              </Text>
+            </View>
+          </View>
+          <View style={newStyles.tableRow}>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}></View>
+            <View style={newStyles.tableCol}>
+              <Text style={newStyles.totalLabel}>Grand Total:</Text>
+            </View>
+            <View style={newStyles.tableCol}>
+              <Text style={newStyles.totalAmount}>
+                ₹{" "}
+                {(invoice?.items?.reduce(
+                  (acc: number, item: any) => acc + item.amount,
+                  0
+                ) * 1.1).toFixed(2)}
+              </Text>
+            </View>
+          </View>
           </View>
         </View>
       </Page>
@@ -174,3 +216,5 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
 };
 
 export default InvoicePDF;
+
+
