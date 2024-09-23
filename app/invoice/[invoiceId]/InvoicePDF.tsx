@@ -5,22 +5,22 @@ import {
   View,
   Document,
   StyleSheet,
-
+  Font,
 } from "@react-pdf/renderer";
 
 // Register fonts
-// Font.register({
-//   family: "Roboto",
-//   fonts: [
-//     { src: "/fonts/Roboto-Regular.ttf" },
-//     { src: "/fonts/Roboto-Bold.ttf", fontWeight: "bold" },
-//   ],
-// });
+Font.register({
+  family: "Roboto",
+  fonts: [
+    { src: "/fonts/Roboto-Regular.ttf" },
+    { src: "/fonts/Roboto-Bold.ttf", fontWeight: "bold" },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    // fontFamily: "Roboto",
+    fontFamily: "Roboto",
   },
   header: {
     flexDirection: "row",
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   table: {
-    display: "flex",
     width: "100%",
     borderCollapse: "collapse",
     marginTop: 20,
@@ -67,6 +66,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderColor: "#ccc",
+    alignItems: "center",
   },
   tableColHeader: {
     padding: 8,
