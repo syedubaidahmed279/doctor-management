@@ -99,6 +99,9 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
         <View style={newStyles.header}>
           <Text style={newStyles.invoiceTitle}>Invoice</Text>
           <View style={newStyles.hospitalDetails}>
+            <Text style={newStyles.hospitalName}>
+              {invoice?.doctor?.hospitalName}
+            </Text>
             <Text style={newStyles.value}>
               {invoice?.doctor?.hospitalAddress?.address}
             </Text>
@@ -111,9 +114,19 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
         </View>
 
         <View style={newStyles.patientDetailsContainer}>
-          <Text style={newStyles.hospitalName}>
-            {invoice?.doctor?.hospitalName}
-          </Text>
+          <View style={newStyles.patientDetails}>
+            <View style={newStyles.detailItem}>
+              <Text style={newStyles.label}>Patient Name:</Text>
+              <Text style={newStyles.value}>{invoice?.patientName}</Text>
+              <Text style={newStyles.label}>Phone Number:</Text>
+              <Text style={newStyles.value}>{invoice?.phoneNumber}</Text>
+              <Text style={newStyles.label}>Email:</Text>
+              <Text style={newStyles.value}>{invoice?.email}</Text>
+              <Text style={newStyles.label}>Date:</Text>
+              <Text style={newStyles.value}>{invoice?.date}</Text>
+            </View>
+          </View>
+        </View>
           <View style={newStyles.patientDetails}>
             <View style={{ ...newStyles.detailItem, width: "100%" }}>
               <Text style={newStyles.label}>Patient Name: </Text>
