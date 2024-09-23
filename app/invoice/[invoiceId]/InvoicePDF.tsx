@@ -42,23 +42,23 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   table: {
-    display: "table",
-    width: "auto",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
+    width: "100%",
+    borderCollapse: "collapse",
+    marginTop: 20,
   },
   tableRow: {
-    margin: "auto",
     flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#ccc",
+  },
+  tableColHeader: {
+    padding: 8,
+    backgroundColor: "#f2f2f2",
+    fontWeight: "bold",
   },
   tableCol: {
-    width: "25%",
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
+    padding: 8,
+    textAlign: "left",
   },
   tableCell: {
     margin: "auto",
@@ -95,32 +95,32 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => (
 
       <View style={styles.table}>
         <View style={styles.tableRow}>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Item Name</Text>
+          <View style={styles.tableColHeader}>
+            <Text>Item Name</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Description</Text>
+          <View style={styles.tableColHeader}>
+            <Text>Description</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Quantity</Text>
+          <View style={styles.tableColHeader}>
+            <Text>Quantity</Text>
           </View>
-          <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>Amount</Text>
+          <View style={styles.tableColHeader}>
+            <Text>Amount</Text>
           </View>
         </View>
         {invoice?.items?.map((item: any) => (
           <View style={styles.tableRow} key={item._id}>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>{item.name}</Text>
+              <Text>{item.name}</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>-</Text>
+              <Text>-</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>1</Text>
+              <Text>1</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>{item.amount}</Text>
+              <Text>{item.amount}</Text>
             </View>
           </View>
         ))}
