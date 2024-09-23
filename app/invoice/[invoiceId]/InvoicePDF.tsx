@@ -145,10 +145,10 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}>
-              <Text style={styles.totalLabel}>Total:</Text>
+              <Text style={newStyles.totalLabel}>Total:</Text>
             </View>
             <View style={newStyles.tableCol}>
-              <Text style={styles.totalAmount}>
+              <Text style={newStyles.totalAmount}>
                 ₹
                 {invoice?.items?.reduce(
                   (acc: number, item: any) => acc + item.amount,
@@ -163,22 +163,5 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
   );
 };
 
-const totalLabel = {
-  fontSize: 12,
-  fontWeight: "bold",
-};
-
-const totalAmount = {
-  fontSize: 12,
-  fontWeight: "bold",
-};
-
-const newStyles = StyleSheet.create({
-  ...styles,
-  totalLabel,
-  totalAmount,
-});
-
-export default InvoicePDF;
 
 export default InvoicePDF;
