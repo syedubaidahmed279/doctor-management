@@ -95,13 +95,14 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
           <View style={newStyles.hospitalDetails}>
             <Text style={newStyles.label}>Hospital Name:</Text>
             <Text style={newStyles.value}>{invoice?.doctor?.hospitalName}</Text>
-            {/* Add more hospital details as needed */}
+            <Text style={newStyles.value}>{invoice?.doctor?.hospitalAddress?.address}</Text>
+            <Text style={newStyles.value}>{invoice?.doctor?.hospitalAddress?.city}, {invoice?.doctor?.hospitalAddress?.state} - {invoice?.doctor?.hospitalAddress?.pincode}</Text>
           </View>
         </View>
 
         <View style={newStyles.patientDetails}>
-          <View style={newStyles.detailItem}>
-            <Text style={newStyles.label}>Patient Name:</Text>
+          <View style={{...newStyles.detailItem, width: '100%'}}>
+            <Text style={newStyles.label}>Patient Name: </Text>
             <Text style={newStyles.value}>{invoice?.patientName}</Text>
           </View>
           <View style={newStyles.detailItem}>
