@@ -86,6 +86,7 @@ interface InvoiceProps {
 }
 
 const InvoicePDF = ({ invoice }: InvoiceProps) => {
+  console.log(invoice);
   return (
     <Document>
       <Page size="A4" style={newStyles.page}>
