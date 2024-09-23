@@ -28,9 +28,35 @@ const Invoice = ({ params }: Props) => {
     }
   }, [invoice]);
 
-  console.log(isLoading);
+  const [isClient, setIsClient] = useState(false);
 
-  return <div>Invoice</div>;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <PDFDownloadLink
+            document={<InvoicePDF invoice={invoice} />}
+            fileName="invoice.pdf"
+          >
+            {({ blob, url, loading, error }) =>
+              loading ? 'Loading document...' : 'Download now!'
+            }
+          </PDFDownloadLink>
+          <div>Invoice</div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Invoice;
