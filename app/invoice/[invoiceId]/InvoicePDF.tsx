@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
 const styles = StyleSheet.create({
   page: {
@@ -81,72 +75,75 @@ interface InvoiceProps {
   invoice: any;
 }
 
-const InvoicePDF = ({ invoice }: InvoiceProps) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      <View style={styles.header}>
-        <Text style={styles.invoiceTitle}>Invoice</Text>
-        <View style={styles.hospitalDetails}>
-          <Text style={styles.label}>Hospital Name:</Text>
-          <Text style={styles.value}>{invoice?.doctor?.hospitalName}</Text>
-          {/* Add more hospital details as needed */}
+const InvoicePDF = ({ invoice }: InvoiceProps) => {
+  console.log(invoice);
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.invoiceTitle}>Invoice</Text>
+          <View style={styles.hospitalDetails}>
+            <Text style={styles.label}>Hospital Name:</Text>
+            <Text style={styles.value}>{invoice?.doctor?.hospitalName}</Text>
+            {/* Add more hospital details as needed */}
+          </View>
         </View>
-      </View>
 
-      <View style={styles.patientDetails}>
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Patient Name:</Text>
-          <Text style={styles.value}>{invoice?.patientName}</Text>
+        <View style={styles.patientDetails}>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Patient Name:</Text>
+            <Text style={styles.value}>{invoice?.patientName}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Phone Number:</Text>
+            <Text style={styles.value}>{invoice?.phoneNumber}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.value}>{invoice?.email}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Date:</Text>
+            <Text style={styles.value}>{invoice?.date}</Text>
+          </View>
+          {/* Add more patient details as needed */}
         </View>
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Phone Number:</Text>
-          <Text style={styles.value}>{invoice?.phoneNumber}</Text>
-        </View>
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Email:</Text>
-          <Text style={styles.value}>{invoice?.email}</Text>
-        </View>
-        <View style={styles.detailItem}>
-          <Text style={styles.label}>Date:</Text>
-          <Text style={styles.value}>{invoice?.date}</Text>
-        </View>
-        {/* Add more patient details as needed */}
-      </View>
 
-      <View style={styles.table}>
-        <View style={styles.tableRow}>
-          <View style={styles.tableColHeader}>
-            <Text>Item Name</Text>
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
+              <Text>Item Name</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Description</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Quantity</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Amount</Text>
+            </View>
           </View>
-          <View style={styles.tableColHeader}>
-            <Text>Description</Text>
-          </View>
-          <View style={styles.tableColHeader}>
-            <Text>Quantity</Text>
-          </View>
-          <View style={styles.tableColHeader}>
-            <Text>Amount</Text>
-          </View>
+          {invoice?.items?.map((item: any, index: number) => (
+            <View style={styles.tableRow} key={item._id}>
+              <View style={styles.tableCol}>
+                <Text>{item.name}</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>-</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>1</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>{item.amount}</Text>
+              </View>
+            </View>
+          ))}
         </View>
-        {invoice?.items?.map((item: any, index: number) => (
-          <View style={styles.tableRow} key={item._id}>
-            <View style={styles.tableCol}>
-              <Text>{item.name}</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text>-</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text>1</Text>
-            </View>
-            <View style={styles.tableCol}>
-              <Text>{item.amount}</Text>
-            </View>
-          </View>
-        ))}
-      </View>
-    </Page>
-  </Document>
-);
+      </Page>
+    </Document>
+  );
+};
 
 export default InvoicePDF;
