@@ -1,8 +1,8 @@
 "use client";
 import { useAppContext } from "@/lib/context";
-import React, { use, useEffect, useState } from "react";
-import { PDFDownloadLink } from '@react-pdf/renderer';
-import InvoicePDF from './InvoicePDF';
+import React, { useEffect, useState } from "react";
+import { PDFViewer } from "@react-pdf/renderer";
+import InvoicePDF from "./InvoicePDF";
 
 type Props = {
   params: {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Invoice = ({ params }: Props) => {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   console.log(params.invoiceId);
 
   const { billings } = useAppContext();
@@ -44,15 +44,9 @@ const Invoice = ({ params }: Props) => {
         <div>Loading...</div>
       ) : (
         <>
-          <PDFDownloadLink
-            document={<InvoicePDF invoice={invoice} />}
-            fileName="invoice.pdf"
-          >
-            {({ blob, url, loading, error }) =>
-              loading ? 'Loading document...' : 'Download now!'
-            }
-          </PDFDownloadLink>
-          <div>Invoice</div>
+          <PDFViewer style={{ width: "100%", height: "100vh" }}>
+            <InvoicePDF invoice={invoice} />
+          </PDFViewer>
         </>
       )}
     </div>
