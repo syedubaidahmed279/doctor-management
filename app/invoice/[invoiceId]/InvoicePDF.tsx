@@ -46,9 +46,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   tableRow: {
+    display: "flex",
     flexDirection: "row",
     borderBottomWidth: 1,
     borderColor: "#ccc",
+    alignItems: "center",
   },
   tableColHeader: {
     padding: 8,
@@ -63,19 +65,10 @@ const styles = StyleSheet.create({
     textAlign: "left",
     flex: 1, // Distribute space evenly
   },
-  total: {
-    marginTop: 20,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  totalLabel: {
-    fontSize: 12,
-    fontWeight: "bold",
-    marginRight: 10,
-  },
-  totalAmount: {
-    fontSize: 12,
-    fontWeight: "bold",
+  tableCell: {
+    margin: "auto",
+    marginTop: 5,
+    fontSize: 10,
   },
 });
 
@@ -84,19 +77,70 @@ interface InvoiceProps {
 }
 
 const InvoicePDF = ({ invoice }: InvoiceProps) => {
-  const totalAmount = invoice?.items?.reduce(
-    (sum: number, item: any) => sum + item.amount,
-    0
-  );
-
+  console.log(invoice);
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* ... (rest of the invoice content) ... */}
+        <View style={styles.header}>
+          <Text style={styles.invoiceTitle}>Invoice</Text>
+          <View style={styles.hospitalDetails}>
+            <Text style={styles.label}>Hospital Name:</Text>
+            <Text style={styles.value}>{invoice?.doctor?.hospitalName}</Text>
+            {/* Add more hospital details as needed */}
+          </View>
+        </View>
 
-        <View style={styles.total}>
-          <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalAmount}>₹{totalAmount}</Text>
+        <View style={styles.patientDetails}>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Patient Name:</Text>
+            <Text style={styles.value}>{invoice?.patientName}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Phone Number:</Text>
+            <Text style={styles.value}>{invoice?.phoneNumber}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.value}>{invoice?.email}</Text>
+          </View>
+          <View style={styles.detailItem}>
+            <Text style={styles.label}>Date:</Text>
+            <Text style={styles.value}>{invoice?.date}</Text>
+          </View>
+          {/* Add more patient details as needed */}
+        </View>
+
+        <View style={styles.table}>
+          <View style={styles.tableRow}>
+            <View style={styles.tableColHeader}>
+              <Text>Item Name</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Description</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Quantity</Text>
+            </View>
+            <View style={styles.tableColHeader}>
+              <Text>Amount</Text>
+            </View>
+          </View>
+          {invoice?.items?.map((item: any, index: number) => (
+            <View style={styles.tableRow} key={item._id}>
+              <View style={styles.tableCol}>
+                <Text>{item.name}</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>-</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>1</Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text>{item.amount}</Text>
+              </View>
+            </View>
+          ))}
         </View>
       </Page>
     </Document>
