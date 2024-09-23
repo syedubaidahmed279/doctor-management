@@ -70,6 +70,14 @@ const newStyles = StyleSheet.create({
     marginTop: 5,
     fontSize: 10,
   },
+  totalLabel: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
+  totalAmount: {
+    fontSize: 12,
+    fontWeight: "bold",
+  },
 });
 
 interface InvoiceProps {
