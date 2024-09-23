@@ -8,16 +8,29 @@ import {
   Font,
 } from "@react-pdf/renderer";
 
+import { Font } from "@react-pdf/renderer";
+
 // Register fonts
+Font.register({
+  family: "Roboto",
+  fonts: [
+    { src: "/fonts/Roboto-Regular.ttf" },
+    { src: "/fonts/Roboto-Bold.ttf", fontWeight: "bold" },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
     padding: 30,
+    fontFamily: "Roboto",
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-start", // Align items to the top
     marginBottom: 20,
+    borderBottom: "1px solid #ccc",
+    paddingBottom: 10,
   },
   invoiceTitle: {
     fontSize: 24,
@@ -25,13 +38,26 @@ const styles = StyleSheet.create({
   },
   hospitalDetails: {
     flexDirection: "column",
+    alignItems: "flex-end", // Align to the right
   },
   label: {
+    fontSize: 10,
     fontWeight: "bold",
+  },
+  value: {
+    fontSize: 10,
+    textDecoration: "underline",
   },
   patientDetails: {
     marginTop: 20,
-    flexDirection: "column",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    borderBottom: "1px solid #ccc",
+    paddingBottom: 10,
+  },
+  detailItem: {
+    width: "50%",
+    marginBottom: 5,
   },
   table: {
     width: "100%",
@@ -47,10 +73,14 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#f2f2f2",
     fontWeight: "bold",
+    fontSize: 10,
+    textAlign: "left",
   },
   tableCol: {
     padding: 8,
+    fontSize: 10,
     textAlign: "left",
+    flex: 1, // Distribute space evenly
   },
   tableCell: {
     margin: "auto",
@@ -70,19 +100,29 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => (
         <Text style={styles.invoiceTitle}>Invoice</Text>
         <View style={styles.hospitalDetails}>
           <Text style={styles.label}>Hospital Name:</Text>
-          <Text>{invoice?.doctor?.hospitalName}</Text>
+          <Text style={styles.value}>{invoice?.doctor?.hospitalName}</Text>
+          {/* Add more hospital details as needed */}
         </View>
       </View>
 
       <View style={styles.patientDetails}>
-        <Text style={styles.label}>Patient Name:</Text>
-        <Text>{invoice?.patientName}</Text>
-        <Text style={styles.label}>Phone Number:</Text>
-        <Text>{invoice?.phoneNumber}</Text>
-        <Text style={styles.label}>Email:</Text>
-        <Text>{invoice?.email}</Text>
-        <Text style={styles.label}>Date:</Text>
-        <Text>{invoice?.date}</Text>
+        <View style={styles.detailItem}>
+          <Text style={styles.label}>Patient Name:</Text>
+          <Text style={styles.value}>{invoice?.patientName}</Text>
+        </View>
+        <View style={styles.detailItem}>
+          <Text style={styles.label}>Phone Number:</Text>
+          <Text style={styles.value}>{invoice?.phoneNumber}</Text>
+        </View>
+        <View style={styles.detailItem}>
+          <Text style={styles.label}>Email:</Text>
+          <Text style={styles.value}>{invoice?.email}</Text>
+        </View>
+        <View style={styles.detailItem}>
+          <Text style={styles.label}>Date:</Text>
+          <Text style={styles.value}>{invoice?.date}</Text>
+        </View>
+        {/* Add more patient details as needed */}
       </View>
 
       <View style={styles.table}>
@@ -100,7 +140,7 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => (
             <Text>Amount</Text>
           </View>
         </View>
-        {invoice?.items?.map((item: any) => (
+        {invoice?.items?.map((item: any, index: number) => (
           <View style={styles.tableRow} key={item._id}>
             <View style={styles.tableCol}>
               <Text>{item.name}</Text>
