@@ -208,13 +208,10 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
               </Text>
             </View>
           </View>
-          </View>
-        </View>
+        </View> 
       </Page>
     </Document>
   );
 };
 
 export default InvoicePDF;
-
-
