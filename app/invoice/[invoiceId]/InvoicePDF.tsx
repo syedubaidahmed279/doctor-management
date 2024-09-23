@@ -163,5 +163,4 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
   );
 };
 
-
 export default InvoicePDF;
