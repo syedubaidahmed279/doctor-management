@@ -31,9 +31,10 @@ export const BillingCell: React.FC<any> = ({ data }) => {
     }
   };
 
-  const handleViewInvoice = (id: any) => {
-    router.replace(`/invoice/${id}`);
-  };
+const handleViewInvoice = (id: any) => {
+  globalThis.open?.(`/invoice/${id}`, '_blank')?.focus();
+};
+
 
   const handleDelete = async (id: any) => {
     try {

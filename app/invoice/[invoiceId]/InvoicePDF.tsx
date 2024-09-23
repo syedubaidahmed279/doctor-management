@@ -1,5 +1,13 @@
+// /Users/abdurrahman/VsCode/WebDev/artifConnect/doctor-management/app/invoice/[invoiceId]/InvoicePDF.tsx
 import React from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image,
+} from "@react-pdf/renderer";
 
 const newStyles = StyleSheet.create({
   page: {
@@ -7,30 +15,36 @@ const newStyles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
     marginBottom: 20,
     borderBottom: "1px solid #ccc",
     paddingBottom: 10,
+    gap: 20,
   },
-  invoiceTitle: {
+  image: {
+    width: "100px", // or whatever width you want
+    height: "50px", // or whatever height you want
+  },
+  hospitalLogo: {
+    flexDirection: "row",
+    justifyContent: "flex-start", // or "flex-end" to align to the right
+  },
+
+  hospitalDetails: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  hospitalName: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  hospitalDetails: {
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
-  hospitalName: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   label: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "bold",
   },
   value: {
-    fontSize: 10,
+    fontSize: 12,
     textDecoration: "underline",
   },
   patientDetailsContainer: {
@@ -44,8 +58,10 @@ const newStyles = StyleSheet.create({
   },
   detailItem: {
     display: "flex",
+    flexDirection: "row",
     width: "50%",
     marginBottom: 5,
+    gap: 10,
   },
   table: {
     width: "100%",
@@ -62,20 +78,20 @@ const newStyles = StyleSheet.create({
     padding: 8,
     backgroundColor: "#f2f2f2",
     fontWeight: "bold",
-    fontSize: 10,
+    fontSize: 12,
     textAlign: "left",
     flexGrow: 1,
   },
   tableCol: {
     padding: 8,
-    fontSize: 10,
+    fontSize: 12,
     textAlign: "left",
     flexGrow: 1,
   },
   tableCell: {
     margin: "auto",
     marginTop: 5,
-    fontSize: 10,
+    fontSize: 12,
   },
   totalLabel: {
     fontSize: 12,
@@ -92,20 +108,24 @@ interface InvoiceProps {
 }
 
 const InvoicePDF = ({ invoice }: InvoiceProps) => {
-  console.log(invoice);
+  const imageUrl = invoice?.doctor?.image;
   return (
     <Document>
       <Page size="A4" style={newStyles.page}>
         <View style={newStyles.header}>
-          <Text style={newStyles.invoiceTitle}>Invoice</Text>
+          {imageUrl && (
+            <View style={newStyles.hospitalLogo}>
+              <Image style={newStyles.image} src={imageUrl} />
+            </View>
+          )}
           <View style={newStyles.hospitalDetails}>
             <Text style={newStyles.hospitalName}>
               {invoice?.doctor?.hospitalName}
             </Text>
-            <Text style={newStyles.value}>
+            <Text style={newStyles.label}>
               {invoice?.doctor?.hospitalAddress?.address}
             </Text>
-            <Text style={newStyles.value}>
+            <Text style={newStyles.label}>
               {invoice?.doctor?.hospitalAddress?.city},{" "}
               {invoice?.doctor?.hospitalAddress?.state} -{" "}
               {invoice?.doctor?.hospitalAddress?.pincode}
@@ -133,39 +153,19 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             </View>
           </View>
         </View>
-          <View style={newStyles.patientDetails}>
-            <View style={{ ...newStyles.detailItem, width: "100%" }}>
-              <Text style={newStyles.label}>Patient Name: </Text>
-              <Text style={newStyles.value}>{invoice?.patientName}</Text>
-            </View>
-            <View style={newStyles.detailItem}>
-              <Text style={newStyles.label}>Phone Number:</Text>
-              <Text style={newStyles.value}>{invoice?.phoneNumber}</Text>
-            </View>
-            <View style={newStyles.detailItem}>
-              <Text style={newStyles.label}>Email:</Text>
-              <Text style={newStyles.value}>{invoice?.email}</Text>
-            </View>
-            <View style={newStyles.detailItem}>
-              <Text style={newStyles.label}>Date:</Text>
-              <Text style={newStyles.value}>{invoice?.date}</Text>
-            </View>
-            {/* Add more patient details as needed */}
-          </View>
-        </View>
         <View style={newStyles.table}>
           <View style={newStyles.tableRow}>
             <View style={newStyles.tableColHeader}>
               <Text>Item Name</Text>
             </View>
             <View style={newStyles.tableColHeader}>
-              <Text>Description</Text>
+              <Text> </Text>
             </View>
             <View style={newStyles.tableColHeader}>
-              <Text>Quantity</Text>
+              <Text> </Text>
             </View>
             <View style={newStyles.tableColHeader}>
-              <Text>Amount</Text>
+              <Text>Amount </Text>
             </View>
           </View>
           {invoice?.items?.map((item: any, index: number) => (
@@ -174,10 +174,10 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
                 <Text>{item.name}</Text>
               </View>
               <View style={newStyles.tableCol}>
-                <Text>-</Text>
+                <Text></Text>
               </View>
               <View style={newStyles.tableCol}>
-                <Text>1</Text>
+                <Text> </Text>
               </View>
               <View style={newStyles.tableCol}>
                 <Text>Rs.{item.amount}</Text>
@@ -205,7 +205,7 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}>
-              <Text style={newStyles.totalLabel}>Tax (10%):</Text>
+              <Text style={newStyles.totalLabel}>GST (10%):</Text>
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
