@@ -34,6 +34,8 @@ export function AddBillingModal() {
   });
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<any>();
+  const [dateOfAdmission, setDateOfAdmission] = useState<any>();
+  const [dateOfDischarge, setDateOfDischarge] = useState<any>();
   const { user, billingRefetch, setBillingRefetch, appointments } =
     useAppContext();
 
@@ -49,6 +51,8 @@ export function AddBillingModal() {
     e.preventDefault();
     inputs.date = format(date, "PPP");
     inputs.doctor = user?._id;
+    inputs.dateOfAdmission = dateOfAdmission ? format(dateOfAdmission, "PPP") : null;
+    inputs.dateOfDischarge = dateOfDischarge ? format(dateOfDischarge, "PPP") : null;
 
     try {
       const promise = await api.post(`/billing/create`, inputs);
@@ -147,6 +151,82 @@ export function AddBillingModal() {
               required //required for razorpay to send invoice to the email
               onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
             />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Input
+              id="roomNo"
+              type="text"
+              className=""
+              placeholder="Room No"
+              onChange={(e) => setInputs({ ...inputs, roomNo: e.target.value })}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Input
+              id="admissionNo"
+              type="text"
+              className=""
+              placeholder="Admission No"
+              onChange={(e) =>
+                setInputs({ ...inputs, admissionNo: e.target.value })
+              }
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="username" className="">
+              Date Of Admission
+            </Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dateOfAdmission && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateOfAdmission ? format(dateOfAdmission, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={dateOfAdmission}
+                  onSelect={setDateOfAdmission}
+                  // initialFocus
+                  required
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="username" className="">
+              Date Of Discharge
+            </Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"outline"}
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !dateOfDischarge && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateOfDischarge ? format(dateOfDischarge, "PPP") : <span>Pick a date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={dateOfDischarge}
+                  onSelect={setDateOfDischarge}
+                  // initialFocus
+                  required
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="grid gap-4">
