@@ -103,22 +103,15 @@ export function AddBillingModal() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
-            <Select
-              onValueChange={(value) =>
-                setInputs({ ...inputs, patientName: value })
+            <Input
+              id="patientName"
+              type="text"
+              className=""
+              placeholder="Patient Name"
+              onChange={(e) =>
+                setInputs({ ...inputs, patientName: e.target.value })
               }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select a patient" />
-              </SelectTrigger>
-              <SelectContent>
-                {patientNames?.map((patientName: string) => (
-                  <SelectItem key={patientName} value={patientName}>
-                    {patientName}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            />
           </div>
           {/* add doctor name */}
           <div className="flex flex-col justify-start items-start gap-2">
