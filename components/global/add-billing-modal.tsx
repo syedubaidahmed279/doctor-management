@@ -51,8 +51,12 @@ export function AddBillingModal() {
     e.preventDefault();
     inputs.date = format(date, "PPP");
     inputs.doctor = user?._id;
-    inputs.dateOfAdmission = dateOfAdmission ? format(dateOfAdmission, "PPP") : null;
-    inputs.dateOfDischarge = dateOfDischarge ? format(dateOfDischarge, "PPP") : null;
+    inputs.dateOfAdmission = dateOfAdmission
+      ? format(dateOfAdmission, "PPP")
+      : null;
+    inputs.dateOfDischarge = dateOfDischarge
+      ? format(dateOfDischarge, "PPP")
+      : null;
 
     try {
       const promise = await api.post(`/billing/create`, inputs);
@@ -142,16 +146,7 @@ export function AddBillingModal() {
               }
             />
           </div>
-          <div className="flex flex-col justify-start items-start gap-2">
-            <Input
-              id="email"
-              type="email"
-              className=""
-              placeholder="Email"
-              required //required for razorpay to send invoice to the email
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
-            />
-          </div>
+
           <div className="flex flex-col justify-start items-start gap-2">
             <Input
               id="roomNo"
@@ -186,7 +181,11 @@ export function AddBillingModal() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateOfAdmission ? format(dateOfAdmission, "PPP") : <span>Pick a date</span>}
+                  {dateOfAdmission ? (
+                    format(dateOfAdmission, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -214,7 +213,11 @@ export function AddBillingModal() {
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {dateOfDischarge ? format(dateOfDischarge, "PPP") : <span>Pick a date</span>}
+                  {dateOfDischarge ? (
+                    format(dateOfDischarge, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
