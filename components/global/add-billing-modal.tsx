@@ -111,6 +111,9 @@ export function AddBillingModal() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="patientName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Patient Name
+            </Label>
             <Input
               id="patientName"
               type="text"
@@ -123,6 +126,9 @@ export function AddBillingModal() {
           </div>
           {/* add doctor name */}
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="doctorName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Doctor Name
+            </Label>
             <Input
               id="doctorName"
               type="text"
@@ -135,6 +141,9 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="phoneNumber" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Phone Number
+            </Label>
             <Input
               id="phoneNumber"
               type="number"
@@ -148,6 +157,9 @@ export function AddBillingModal() {
           </div>
 
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="roomNo" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Room No
+            </Label>
             <Input
               id="roomNo"
               type="text"
@@ -157,6 +169,9 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="admissionNo" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Admission No
+            </Label>
             <Input
               id="admissionNo"
               type="text"
@@ -168,7 +183,31 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="username" className="">
+            <Label htmlFor="age" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Age
+            </Label>
+            <Input
+              id="age"
+              type="text"
+              className=""
+              placeholder="Age"
+              onChange={(e) => setInputs({ ...inputs, age: e.target.value })}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="address" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Address
+            </Label>
+            <Input
+              id="address"
+              type="text"
+              className=""
+              placeholder="Address"
+              onChange={(e) => setInputs({ ...inputs, address: e.target.value })}
+            />
+          </div>
+          <div className="flex flex-col justify-start items-start gap-2">
+            <Label htmlFor="dateOfAdmission" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Date Of Admission
             </Label>
             <Popover>
@@ -200,7 +239,7 @@ export function AddBillingModal() {
             </Popover>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="username" className="">
+            <Label htmlFor="dateOfDischarge" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Date Of Discharge
             </Label>
             <Popover>
@@ -270,7 +309,7 @@ export function AddBillingModal() {
             </Button>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="username" className="">
+            <Label htmlFor="date" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Date
             </Label>
             <Popover>
