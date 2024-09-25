@@ -109,7 +109,7 @@ export function AddBillingModal() {
           <DialogTitle>Add new billing</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="patientName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Patient Name
@@ -155,7 +155,6 @@ export function AddBillingModal() {
               }
             />
           </div>
-
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="roomNo" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Room No
@@ -270,8 +269,7 @@ export function AddBillingModal() {
               </PopoverContent>
             </Popover>
           </div>
-
-          <div className="gap-4">
+          <div className="col-span-2 gap-4">
             {inputs.items.map((item: any, index: number) => (
               <div key={index} className="flex flex-col gap-2">
                 <div className="flex gap-2">
