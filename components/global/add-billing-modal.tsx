@@ -49,7 +49,7 @@ export function AddBillingModal() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    inputs.date = format(date, "PPP");
+    inputs.date = format(new Date(), "PPP");
     inputs.doctor = user?._id;
     inputs.dateOfAdmission = dateOfAdmission
       ? format(dateOfAdmission, "PPP")
@@ -111,7 +111,10 @@ export function AddBillingModal() {
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="patientName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="patientName"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Patient Name
             </Label>
             <Input
@@ -126,7 +129,10 @@ export function AddBillingModal() {
           </div>
           {/* add doctor name */}
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="doctorName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="doctorName"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Doctor Name
             </Label>
             <Input
@@ -141,7 +147,10 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="phoneNumber" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="phoneNumber"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Phone Number
             </Label>
             <Input
@@ -156,7 +165,10 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="roomNo" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="roomNo"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Room No
             </Label>
             <Input
@@ -168,7 +180,10 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="admissionNo" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="admissionNo"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Admission No
             </Label>
             <Input
@@ -182,10 +197,14 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="age" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="age"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Age
             </Label>
             <Input
+              required
               id="age"
               type="text"
               className=""
@@ -194,19 +213,28 @@ export function AddBillingModal() {
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="address" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="address"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Address
             </Label>
             <Input
+              required
               id="address"
               type="text"
               className=""
               placeholder="Address"
-              onChange={(e) => setInputs({ ...inputs, address: e.target.value })}
+              onChange={(e) =>
+                setInputs({ ...inputs, address: e.target.value })
+              }
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="dateOfAdmission" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="dateOfAdmission"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Date Of Admission
             </Label>
             <Popover>
@@ -238,7 +266,10 @@ export function AddBillingModal() {
             </Popover>
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="dateOfDischarge" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="dateOfDischarge"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Date Of Discharge
             </Label>
             <Popover>
@@ -269,6 +300,7 @@ export function AddBillingModal() {
               </PopoverContent>
             </Popover>
           </div>
+
           <div className="col-span-2 gap-4">
             {inputs.items.map((item: any, index: number) => (
               <div key={index} className="flex flex-col gap-2">
@@ -302,40 +334,19 @@ export function AddBillingModal() {
                 </div>
               </div>
             ))}
-            <Button variant="outline" onClick={handleAddItem} className="col-span-2">
-              Add Item
+          </div>
+          <Button
+            variant="outline"
+            onClick={handleAddItem}
+            className="col-span-2"
+          >
+            Add Item
+          </Button>
+
+          <DialogFooter className="col-span-2">
+            <Button className="w-full " type="submit">
+              Add
             </Button>
-          </div>
-          <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="date" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              Date
-            </Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant={"outline"}
-                  className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
-                  )}
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, "PPP") : <span>Pick a date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  // initialFocus
-                  required
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-          <DialogFooter>
-            <Button type="submit">Add</Button>
           </DialogFooter>
         </form>
       </DialogContent>

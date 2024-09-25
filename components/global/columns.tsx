@@ -189,8 +189,8 @@ export const getBillingColumns = (): ColumnDef<any>[] => {
       header: "Phone Number",
     },
     {
-      accessorKey: "email",
-      header: "Email",
+      accessorKey: "address",
+      header: "Address",
     },
     {
       accessorKey: "date",

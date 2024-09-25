@@ -109,6 +109,7 @@ interface InvoiceProps {
 
 const InvoicePDF = ({ invoice }: InvoiceProps) => {
   const imageUrl = invoice?.doctor?.image;
+
   return (
     <Document>
       <Page size="A4" style={newStyles.page}>
@@ -144,19 +145,47 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
               <Text style={newStyles.value}>{invoice?.phoneNumber}</Text>
             </View>
             <View style={newStyles.detailItem}>
-              <Text style={newStyles.label}>Email:</Text>
-              <Text style={newStyles.value}>{invoice?.email}</Text>
+              <Text style={newStyles.label}>Age:</Text>
+              <Text style={newStyles.value}>{invoice?.age}</Text>
             </View>
             <View style={newStyles.detailItem}>
-              <Text style={newStyles.label}>Date:</Text>
+              <Text style={newStyles.label}>Bill Issue Date:</Text>
               <Text style={newStyles.value}>{invoice?.date}</Text>
             </View>
+            <View style={newStyles.detailItem}>
+              <Text style={newStyles.label}>Address:</Text>
+              <Text style={newStyles.value}>{invoice?.address}</Text>
+            </View>
+            {invoice?.admissionNo && (
+              <View style={newStyles.detailItem}>
+                <Text style={newStyles.label}>Admission No:</Text>
+                <Text style={newStyles.value}>{invoice?.admissionNo}</Text>
+              </View>
+            )}
+            {invoice?.roomNo && (
+              <View style={newStyles.detailItem}>
+                <Text style={newStyles.label}>Room No:</Text>
+                <Text style={newStyles.value}>{invoice?.roomNo}</Text>
+              </View>
+            )}
+            {invoice?.dateOfAdmission && (
+              <View style={newStyles.detailItem}>
+                <Text style={newStyles.label}>Date Of Admission:</Text>
+                <Text style={newStyles.value}>{invoice?.dateOfAdmission}</Text>
+              </View>
+            )}
+            {invoice?.dateOfDischarge && (
+              <View style={newStyles.detailItem}>
+                <Text style={newStyles.label}>Date Of Discharge:</Text>
+                <Text style={newStyles.value}>{invoice?.dateOfDischarge}</Text>
+              </View>
+            )}
           </View>
         </View>
         <View style={newStyles.table}>
           <View style={newStyles.tableRow}>
             <View style={newStyles.tableColHeader}>
-              <Text>Item Name</Text>
+              <Text>Particulars</Text>
             </View>
             <View style={newStyles.tableColHeader}>
               <Text> </Text>
@@ -165,7 +194,7 @@ const InvoicePDF = ({ invoice }: InvoiceProps) => {
               <Text> </Text>
             </View>
             <View style={newStyles.tableColHeader}>
-              <Text>Amount </Text>
+              <Text>Charges </Text>
             </View>
           </View>
           {invoice?.items?.map((item: any, index: number) => (
