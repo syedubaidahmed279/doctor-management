@@ -71,7 +71,7 @@ const ContextProvider = ({ children }: any) => {
           `/billing?userId=${user?._id}&role=${user?.role}`
         );
 
-        console.log(response?.data?.data);
+       
         setBillings(response?.data?.data);
       };
       if (user) {

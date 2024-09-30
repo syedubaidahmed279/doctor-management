@@ -7,6 +7,7 @@ import { DoctorsCellAction } from "./doctors-cell-action";
 import { ArticleCell } from "./article-cell";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { BillingCell } from "./billing-cell";
+import { standardPackages } from "@/utils/constants";
 
 export const getAppointmentColumns = (userRole: string): ColumnDef<any>[] => {
   const columns: ColumnDef<any>[] = [
@@ -93,6 +94,19 @@ export const getDoctorsColumns = (): ColumnDef<any>[] => {
     {
       accessorKey: "phone",
       header: "PHONE",
+    },
+    {
+      header: "Status",
+      cell: ({ row }: any) => (
+        <p>
+          {row.original?.subscription?.planId
+            ? standardPackages.find(
+                (item: any) =>
+                  item.planId === row.original?.subscription?.planId
+              )?.type
+            : "Not Subscribed"}
+        </p>
+      ),
     },
 
     {

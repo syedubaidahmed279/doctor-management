@@ -1,4 +1,4 @@
-// /Users/abdurrahman/VsCode/WebDev/artifConnect/doctor-management/app/invoice/[invoiceId]/InvoicePDF.tsx
+"use client";
 import React from "react";
 import {
   Page,
@@ -105,11 +105,10 @@ const newStyles = StyleSheet.create({
 
 interface InvoiceProps {
   invoice: any;
+  imageUrl: any;
 }
 
-const InvoicePDF = ({ invoice }: InvoiceProps) => {
-  const imageUrl = invoice?.doctor?.image;
-
+const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
   return (
     <Document>
       <Page size="A4" style={newStyles.page}>
