@@ -1,5 +1,5 @@
-"use client";
-import React from "react";
+'use client';
+import React from 'react';
 import {
   Page,
   Text,
@@ -7,111 +7,113 @@ import {
   Document,
   StyleSheet,
   Image,
-} from "@react-pdf/renderer";
+} from '@react-pdf/renderer';
 
 const newStyles = StyleSheet.create({
   page: {
     padding: 30,
   },
   header: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     marginBottom: 20,
-    borderBottom: "1px solid #ccc",
+    borderBottom: '1px solid #ccc',
     paddingBottom: 10,
     gap: 20,
   },
   image: {
-    width: "100px", // or whatever width you want
-    height: "50px", // or whatever height you want
+    width: '100px', // or whatever width you want
+    height: '50px', // or whatever height you want
   },
   hospitalLogo: {
-    flexDirection: "row",
-    justifyContent: "flex-start", // or "flex-end" to align to the right
+    flexDirection: 'row',
+    justifyContent: 'flex-start', // or "flex-end" to align to the right
   },
 
   hospitalDetails: {
-    flexDirection: "column",
-    alignItems: "flex-start",
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   hospitalName: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   label: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   value: {
     fontSize: 12,
-    textDecoration: "underline",
+    textDecoration: 'underline',
   },
   patientDetailsContainer: {
     marginBottom: 20,
   },
   patientDetails: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    borderBottom: "1px solid #ccc",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    borderBottom: '1px solid #ccc',
     paddingBottom: 10,
   },
   detailItem: {
-    display: "flex",
-    flexDirection: "row",
-    width: "50%",
+    display: 'flex',
+    flexDirection: 'row',
+    width: '50%',
     marginBottom: 5,
     gap: 10,
   },
   table: {
-    width: "100%",
-    borderCollapse: "collapse",
+    width: '100%',
+    borderCollapse: 'collapse',
     marginTop: 20,
   },
   tableRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: "#ccc",
-    alignItems: "center",
+    borderColor: '#ccc',
+    alignItems: 'center',
   },
   tableColHeader: {
     padding: 8,
-    backgroundColor: "#f2f2f2",
-    fontWeight: "bold",
+    backgroundColor: '#f2f2f2',
+    fontWeight: 'bold',
     fontSize: 12,
-    textAlign: "left",
+    textAlign: 'left',
     flexGrow: 1,
   },
   tableCol: {
     padding: 8,
     fontSize: 12,
-    textAlign: "left",
+    textAlign: 'left',
     flexGrow: 1,
   },
   tableCell: {
-    margin: "auto",
+    margin: 'auto',
     marginTop: 5,
     fontSize: 12,
   },
   totalLabel: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   totalAmount: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
 
 interface InvoiceProps {
   invoice: any;
   imageUrl: any;
+  gstin: string;
 }
 
-const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
+const InvoicePDF = ({ invoice, imageUrl, gstin }: InvoiceProps) => {
+  console.log({ gstin });
   return (
     <Document>
-      <Page size="A4" style={newStyles.page}>
+      <Page size='A4' style={newStyles.page}>
         <View style={newStyles.header}>
           {imageUrl && (
             <View style={newStyles.hospitalLogo}>
@@ -126,8 +128,8 @@ const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
               {invoice?.doctor?.hospitalAddress?.address}
             </Text>
             <Text style={newStyles.label}>
-              {invoice?.doctor?.hospitalAddress?.city},{" "}
-              {invoice?.doctor?.hospitalAddress?.state} -{" "}
+              {invoice?.doctor?.hospitalAddress?.city},{' '}
+              {invoice?.doctor?.hospitalAddress?.state} -{' '}
               {invoice?.doctor?.hospitalAddress?.pincode}
             </Text>
           </View>
@@ -179,6 +181,12 @@ const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
                 <Text style={newStyles.value}>{invoice?.dateOfDischarge}</Text>
               </View>
             )}
+            {gstin && (
+              <View style={newStyles.detailItem}>
+                <Text style={newStyles.label}>GSTIN:</Text>
+                <Text style={newStyles.value}>{gstin}</Text>
+              </View>
+            )}
           </View>
         </View>
         <View style={newStyles.table}>
@@ -221,7 +229,7 @@ const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                Rs.{" "}
+                Rs.{' '}
                 {invoice?.items?.reduce(
                   (acc: number, item: any) => acc + item.amount,
                   0
@@ -233,16 +241,19 @@ const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}></View>
             <View style={newStyles.tableCol}>
-              <Text style={newStyles.totalLabel}>GST (10%):</Text>
+              <Text style={newStyles.totalLabel}>
+                GST ({invoice?.gstTax}%):
+              </Text>
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                Rs.{" "}
+                Rs.{' '}
                 {(
                   invoice?.items?.reduce(
                     (acc: number, item: any) => acc + item.amount,
                     0
-                  ) * 0.1
+                  ) *
+                  (invoice?.gstTax / 100)
                 ).toFixed(2)}
               </Text>
             </View>
@@ -255,12 +266,13 @@ const InvoicePDF = ({ invoice, imageUrl }: InvoiceProps) => {
             </View>
             <View style={newStyles.tableCol}>
               <Text style={newStyles.totalAmount}>
-                Rs.{" "}
+                Rs.{' '}
                 {(
                   invoice?.items?.reduce(
                     (acc: number, item: any) => acc + item.amount,
                     0
-                  ) * 1.1
+                  ) *
+                  (1 + invoice?.gstTax / 100)
                 ).toFixed(2)}
               </Text>
             </View>

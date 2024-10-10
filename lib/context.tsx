@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import api from "@/utils/axiosInstance";
-import axios from "axios";
+import api from '@/utils/axiosInstance';
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react';
 
 export const UserContext = createContext<any>({});
 
@@ -25,14 +24,16 @@ const ContextProvider = ({ children }: any) => {
   const [appointmentRefetch, setAppointmentRefetch] = useState(false);
   const [usersRefetch, setUsersRefetch] = useState(false);
   const [articlesRefetch, setArticlesRefetch] = useState(false);
+  const [reviewsRefetch, setReviewsRefetch] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [billings, setBillings] = useState([]);
   const [billingRefetch, setBillingRefetch] = useState(false);
   const [articles, setArticles] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [doctors, setDoctors] = useState([]);
-
+  const [openReview, setOpenReview] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const toggle = useCallback(() => {
@@ -64,6 +65,7 @@ const ContextProvider = ({ children }: any) => {
       console.log(error);
     }
   }, [appointmentRefetch]);
+
   useEffect(() => {
     try {
       const getAllBillings = async () => {
@@ -71,11 +73,9 @@ const ContextProvider = ({ children }: any) => {
           `/billing?userId=${user?._id}&role=${user?.role}`
         );
 
-       
         setBillings(response?.data?.data);
       };
-      if (user) {
-        console.log(user);
+      if (user?._id) {
         getAllBillings();
       }
     } catch (error) {
@@ -97,6 +97,19 @@ const ContextProvider = ({ children }: any) => {
   }, [articlesRefetch]);
 
   useEffect(() => {
+    try {
+      const getAllReviews = async () => {
+        const response = await api.get(`/review`);
+
+        setReviews(response?.data?.data);
+      };
+      getAllReviews();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [reviewsRefetch]);
+
+  useEffect(() => {
     const getProfile = async () => {
       setIsLoading(true);
 
@@ -108,8 +121,8 @@ const ContextProvider = ({ children }: any) => {
       } catch (error: any) {
         console.log(error);
         setIsLoading(false);
-        if (error.response.data.message === "Invalid Token!") {
-          localStorage.removeItem("dmToken");
+        if (error.response.data.message === 'Invalid Token!') {
+          localStorage.removeItem('dmToken');
         }
       }
     };
@@ -118,7 +131,7 @@ const ContextProvider = ({ children }: any) => {
   }, [userRefetch]);
 
   const logout = () => {
-    window.localStorage.removeItem("dmToken");
+    window.localStorage.removeItem('dmToken');
     setUser({});
   };
 
@@ -148,6 +161,12 @@ const ContextProvider = ({ children }: any) => {
     billings,
     billingRefetch,
     setBillingRefetch,
+    reviews,
+    setReviews,
+    reviewsRefetch,
+    setReviewsRefetch,
+    openReview,
+    setOpenReview,
   };
 
   return (
