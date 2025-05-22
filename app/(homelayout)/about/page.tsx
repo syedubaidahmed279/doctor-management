@@ -1,6 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
+import { Advertisement } from "@/components/global/advertisement";
 import SectionTitle from "@/components/global/sec-title";
 import Title from "@/components/global/title";
+import { Suspense } from "react";
 
 const AboutPage = () => {
   return (
@@ -74,7 +76,7 @@ const AboutPage = () => {
               <strong>Our Impact: </strong>
               <p className="text-muted-foreground text-[17px]">
                 We are proud to say that we have already made a significant
-                impact in the healthcare industry. We have over 6787 live
+                impact in the healthcare industry. We have over 6000+ live
                 doctors and more than 3 crore patients on our platform, and our
                 services have improved patient outcomes and doctor-patient
                 relationships.
@@ -91,6 +93,11 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
+        <Suspense
+          fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
+        >
+          <Advertisement position="before-footer" />
+        </Suspense>
       </div>
     </div>
   );

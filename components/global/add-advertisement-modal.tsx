@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-
 import { Label } from "../ui/label";
 
 import { useEffect, useState } from "react";
@@ -16,48 +15,57 @@ import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 import { toast } from "sonner";
 import { Input } from "../ui/input";
-import { Star } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 
-export function AddReviewModal() {
+export function AddAdvertisementModal() {
   const [loading, setLoading] = useState(false);
   const { user } = useAppContext();
-  const { reviewsRefetch, setReviewsRefetch, openReview, setOpenReview } =
-    useAppContext();
+  const {
+    advertisementsRefetch,
+    setAdvertisementsRefetch,
+    openAdvertisement,
+    setOpenAdvertisement,
+  } = useAppContext();
+
   const [inputs, setInputs] = useState<any>({
-    name: user?.name || "",
     title: "",
     description: "",
-    rating: 0,
+    image: null,
   });
 
-  useEffect(() => {
-    if (user) {
-      setInputs({ ...inputs, name: user.name });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      setInputs({ ...inputs, image: file });
+      setImagePreview(URL.createObjectURL(file));
     }
-  }, [user?.name]);
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (user.role === "doctor") {
-      inputs.image = user.image;
-    }
-    console.log(inputs);
-    if (inputs.rating === 0 || !inputs.rating) {
-      toast.error("Rating is required!", {
-        position: "top-center",
-      });
-      return;
-    }
     setLoading(true);
 
+    const formData = new FormData();
+
+    formData.append("title", inputs.title);
+    formData.append("description", inputs.description);
+    if (inputs.image) {
+      formData.append("image", inputs.image);
+    }
+
     try {
-      const promise = await api.post(`/review/create`, inputs);
+      const promise = await api.post(`/advertisement`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (promise.status === 200) {
-        setReviewsRefetch(!reviewsRefetch);
-        setOpenReview(false);
+        setAdvertisementsRefetch(!advertisementsRefetch);
+        setOpenAdvertisement(false);
         setLoading(false);
-        toast.success(`New Review added.`, {
+        toast.success(`New Advertisement added.`, {
           position: "top-center",
         });
       }
@@ -65,7 +73,7 @@ export function AddReviewModal() {
       console.log(error);
       setLoading(false);
       return toast.error(
-        error.response.data.message || `Failed to add new review!`,
+        error.response.data.message || `Failed to add new advertisement!`,
         {
           position: "top-center",
         }
@@ -74,25 +82,33 @@ export function AddReviewModal() {
   };
 
   return (
-    <Dialog open={openReview} onOpenChange={setOpenReview}>
+    <Dialog open={openAdvertisement} onOpenChange={setOpenAdvertisement}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Add new Review</DialogTitle>
+          <DialogTitle>Add new Advertisement</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
           <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="name" className="">
-              Name
+            <Label htmlFor="image" className="">
+              Image
             </Label>
             <Input
-              id="name"
+              id="image"
+              type="file"
+              accept="image/*"
               className=""
-              onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
-              value={inputs.name}
+              onChange={handleImageChange}
               required
               disabled={loading}
             />
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Image Preview"
+                className="mt-2 w-full max-h-64 object-cover"
+              />
+            )}
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="title" className="">
@@ -119,22 +135,6 @@ export function AddReviewModal() {
               required
               disabled={loading}
             />
-          </div>
-          <div className="flex flex-col justify-start items-start gap-2">
-            <Label htmlFor="rating" className="">
-              Rating
-            </Label>
-            <div className="flex">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`h-6 w-6 cursor-pointer fill-current ${
-                    star <= inputs.rating ? "text-yellow-500" : "text-gray-300"
-                  }`}
-                  onClick={() => setInputs({ ...inputs, rating: star })}
-                />
-              ))}
-            </div>
           </div>
 
           <DialogFooter>

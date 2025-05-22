@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
-import api from '@/utils/axiosInstance';
+import api from "@/utils/axiosInstance";
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from 'react';
+} from "react";
 
 export const UserContext = createContext<any>({});
 
@@ -25,6 +25,8 @@ const ContextProvider = ({ children }: any) => {
   const [usersRefetch, setUsersRefetch] = useState(false);
   const [articlesRefetch, setArticlesRefetch] = useState(false);
   const [reviewsRefetch, setReviewsRefetch] = useState(false);
+  const [advertisementsRefetch, setAdvertisementsRefetch] = useState(false);
+  const [advertisements, setAdvertisements] = useState([]);
 
   const [users, setUsers] = useState([]);
   const [appointments, setAppointments] = useState([]);
@@ -34,6 +36,7 @@ const ContextProvider = ({ children }: any) => {
   const [reviews, setReviews] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [openReview, setOpenReview] = useState(false);
+  const [openAdvertisement, setOpenAdvertisement] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
   const toggle = useCallback(() => {
@@ -110,6 +113,19 @@ const ContextProvider = ({ children }: any) => {
   }, [reviewsRefetch]);
 
   useEffect(() => {
+    try {
+      const getAllAdvertisements = async () => {
+        const response = await api.get(`/advertisement`);
+
+        setAdvertisements(response?.data?.data);
+      };
+      getAllAdvertisements();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [advertisementsRefetch]);
+
+  useEffect(() => {
     const getProfile = async () => {
       setIsLoading(true);
 
@@ -121,8 +137,8 @@ const ContextProvider = ({ children }: any) => {
       } catch (error: any) {
         console.log(error);
         setIsLoading(false);
-        if (error.response.data.message === 'Invalid Token!') {
-          localStorage.removeItem('dmToken');
+        if (error.response.data.message === "Invalid Token!") {
+          localStorage.removeItem("dmToken");
         }
       }
     };
@@ -131,7 +147,7 @@ const ContextProvider = ({ children }: any) => {
   }, [userRefetch]);
 
   const logout = () => {
-    window.localStorage.removeItem('dmToken');
+    window.localStorage.removeItem("dmToken");
     setUser({});
   };
 
@@ -167,6 +183,12 @@ const ContextProvider = ({ children }: any) => {
     setReviewsRefetch,
     openReview,
     setOpenReview,
+    openAdvertisement,
+    setOpenAdvertisement,
+    advertisements,
+    setAdvertisements,
+    advertisementsRefetch,
+    setAdvertisementsRefetch,
   };
 
   return (

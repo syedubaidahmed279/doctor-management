@@ -8,7 +8,6 @@ import { useAppContext } from "@/lib/context";
 import api from "@/utils/axiosInstance";
 import { toast } from "sonner";
 import { EditAppointmentModal } from "./edit-appointment-modal";
-import { format } from "date-fns";
 import "jspdf-autotable";
 export const AppointmentCellAction: React.FC<any> = ({ data }) => {
   const { setAppointmentRefetch, appointmentRefetch } = useAppContext();
@@ -29,40 +28,46 @@ export const AppointmentCellAction: React.FC<any> = ({ data }) => {
   };
 
   const handlePrint = () => {
-    const doc: any = new jsPDF();
+    // Set custom size: 58mm width (~2.28 inches), and height can be dynamic
+    const doc: any = new jsPDF({
+      unit: "mm",
+      format: [58, 100], // Width = 58mm, Height = 100mm
+    });
 
-    doc.setFontSize(18);
+    doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text("Appointment Details", 105, 20, { align: "center" });
+    doc.text("Appointment", 29, 10, { align: "center" });
 
-    doc.setFontSize(10);
+    doc.setFontSize(8);
     doc.setFont("helvetica", "normal");
-    doc.text(`${data?.doctor?.name}`, 20, 40);
-    doc.text(`${data?.doctor?.speciality}`, 20, 48);
-    doc.text(`${data?.doctor?.hospitalName}`, 20, 56);
+    doc.text(`Doctor: ${data?.doctor?.name}`, 5, 20);
+    doc.text(`Speciality: ${data?.doctor?.speciality}`, 5, 25);
+    doc.text(`Hospital: ${data?.doctor?.hospitalName}`, 5, 30);
 
     doc.autoTable({
-      startY: 60,
+      startY: 35,
       head: [["Field", "Value"]],
       body: [
-        ["Patient Name", data.patientName],
-        ["Phone Number", data.phone],
-        ["Next Appointment Date", data.nextAppointmentDate],
+        ["Patient", data.patientName],
+        ["Phone", data.phone],
+        ["Next Visit", data.nextAppointmentDate],
         ["Fee", data.fee],
       ],
       styles: {
-        fontSize: 10,
+        fontSize: 7,
         halign: "center",
+        cellPadding: 1,
       },
+      theme: "grid",
+      margin: { left: 2, right: 2 },
       headStyles: { fillColor: [22, 160, 133] },
-      margin: { top: 80 },
     });
 
-    doc.setFontSize(10);
+    doc.setFontSize(8);
     doc.text(
-      "Thank you for choosing our services!",
-      105,
-      doc.internal.pageSize.getHeight() - 20,
+      "Thank you for choosing us!",
+      29,
+      doc.internal.pageSize.getHeight() - 5,
       { align: "center" }
     );
 

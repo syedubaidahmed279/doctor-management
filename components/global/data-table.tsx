@@ -1,7 +1,9 @@
 "use client";
 
+import { useState, useMemo } from "react";
+
 import {
-  ColumnDef,
+  type ColumnDef,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -18,13 +20,14 @@ import {
 } from "@/components/ui/table";
 import { Input } from "../ui/input";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { Button } from "../ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
   viewSearchKey?: string;
+  isDoctor?: boolean; // New prop to check if source is from doctors
 }
 
 export function DataTable<TData, TValue>({
@@ -32,27 +35,67 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   viewSearchKey,
+  isDoctor = false, // Default to false
 }: DataTableProps<TData, TValue>) {
+  const [subscriptionFilter, setSubscriptionFilter] = useState<
+    "all" | "subscribed" | "unsubscribed"
+  >("all");
+
+  console.log({ data });
+  // Filter data based on subscription status
+  const filteredData = useMemo(() => {
+    if (subscriptionFilter === "all") return data;
+
+    return [...data].filter((item: any) => {
+      const hasSubscription = !!item?.subscription?.planId;
+
+      if (subscriptionFilter === "subscribed") {
+        return hasSubscription;
+      } else {
+        return !hasSubscription;
+      }
+    });
+  }, [data, subscriptionFilter]);
+
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
   });
 
-  /* this can be used to get the selectedrows 
-  console.log("value", table.getFilteredSelectedRowModel()); */
-
   return (
-    <>
-      <Input
-        placeholder={`Search ${viewSearchKey}...`}
-        value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-        onChange={(event) =>
-          table.getColumn(searchKey)?.setFilterValue(event.target.value)
-        }
-        className="w-full md:max-w-sm"
-      />
+    <div className="space-y-4">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <Input
+          placeholder={`Search ${viewSearchKey}...`}
+          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn(searchKey)?.setFilterValue(event.target.value)
+          }
+          className="w-full md:max-w-sm"
+        />
+
+        {isDoctor && (
+          <Tabs
+            defaultValue="all"
+            value={subscriptionFilter}
+            onValueChange={(value) =>
+              setSubscriptionFilter(
+                value as "all" | "subscribed" | "unsubscribed"
+              )
+            }
+            className="w-full md:w-auto"
+          >
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="all">All</TabsTrigger>
+              <TabsTrigger value="subscribed">Subscribed</TabsTrigger>
+              <TabsTrigger value="unsubscribed">Unsubscribed</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        )}
+      </div>
+
       <ScrollArea className="h-[calc(80vh-220px)] rounded-md border md:h-[calc(80dvh-200px)]">
         <Table className="relative">
           <TableHeader>
@@ -104,30 +147,6 @@ export function DataTable<TData, TValue>({
         </Table>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-      {/* <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div> */}
-    </>
+    </div>
   );
 }

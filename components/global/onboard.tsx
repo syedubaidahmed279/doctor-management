@@ -35,7 +35,7 @@ const Onboard = () => {
           Subscribe now and transform your patient management experience
         </p>
         <p className="text-white text-[17px] inline-flex gap-2">
-          <BriefcaseMedical /> Join our community of over 6787+ live doctors and
+          <BriefcaseMedical /> Join our community of over 6000+ live doctors and
           3 crore+ patients
         </p>
         <p className="text-white text-[17px] inline-flex gap-2">

@@ -22,9 +22,10 @@ const Doctors: React.FC<any> = () => {
       <Separator />
       <DataTable
         viewSearchKey="by Name"
-        searchKey="name"
+        searchKey="doctorName"
         columns={getDoctorsColumns()}
         data={doctors}
+        isDoctor={true}
       />
     </>
   );

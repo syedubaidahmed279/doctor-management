@@ -27,10 +27,13 @@ export function AddAppointmentModal() {
   const [date, setDate] = useState<any>();
   const { user, appointmentRefetch, setAppointmentRefetch } = useAppContext();
 
+  console.log({ user });
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     inputs.nextAppointmentDate = format(date, "PPP");
     inputs.doctor = user?._id;
+    inputs.doctorName = user?.name;
 
     try {
       const promise = await api.post(`/appointment/create`, inputs);
@@ -67,7 +70,7 @@ export function AddAppointmentModal() {
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          <div className="flex flex-col justify-start items-start gap-2">
+          {/* <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="doctorName" className="">
               Doctor Name
             </Label>
@@ -79,7 +82,7 @@ export function AddAppointmentModal() {
               }
               required
             />
-          </div>
+          </div> */}
           <div className="flex flex-col justify-start items-start gap-2">
             <Label htmlFor="name" className="">
               Patient Name

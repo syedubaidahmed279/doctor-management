@@ -6,7 +6,7 @@ export default function Auth({ title, children, subtitle }: any) {
   return (
     <div className="relative min-h-screen flex items-center justify-center">
       <div className="p-4 lg:p-8 h-full flex items-center">
-        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[360px]">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[560px]">
           <div className="flex flex-col items-center space-y-2 text-center">
             <Link href="/" className="" prefetch={false}>
               <Logo url="/logo-new.png" />

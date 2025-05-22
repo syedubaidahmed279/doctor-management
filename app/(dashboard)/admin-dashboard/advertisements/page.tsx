@@ -1,15 +1,17 @@
+"use client";
+
+import { Advertisements } from "@/components/global/advertisements";
 import PageContainer from "@/components/global/page-container";
-import { Reviews } from "@/components/global/reviews";
 import React from "react";
 
-const AdminReviewsPage = () => {
+const AdminAdvertisementPage = () => {
   return (
     <PageContainer>
       <div className="space-y-2">
-        <Reviews />
+        <Advertisements />
       </div>
     </PageContainer>
   );
 };
 
-export default AdminReviewsPage;
+export default AdminAdvertisementPage;
