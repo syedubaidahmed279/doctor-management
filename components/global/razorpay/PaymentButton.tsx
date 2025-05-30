@@ -34,7 +34,7 @@ const PaymentButton = ({
 
         const subId = res.data.data;
         const options = {
-          key: "rzp_test_9ZX1UvqC24grAy", // Replace with your Razorpay key
+          key: "rzp_live_1ekqDWQCIFywTl", // Replace with your Razorpay key
           subscription_id: subId,
           name: "Doctor Management.",
           description: planName,
@@ -53,7 +53,7 @@ const PaymentButton = ({
 
             const shasum = crypto.createHmac(
               "sha256",
-              "Nb21FtnqpTmnblSmAqdBOoPw"
+              "Vvu1BMTkWvRyvj4lj7WsUVzz"
             );
             shasum.update(razorpay_payment_id + "|" + razorpay_subscription_id);
             const digest = shasum.digest("hex");
