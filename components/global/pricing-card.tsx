@@ -40,7 +40,7 @@ const PricingCard = ({ data }: { data: Package }) => {
       <div className="bg-accent flex items-center justify-between h-[58px] pl-6 mr-8 py-4">
         <span
           className={cn(
-            "text-black group-hover:text-white text-2xl font-medium "
+            "text-black group-hover:text-white text-xl font-medium "
           )}
         >
           {data.type}

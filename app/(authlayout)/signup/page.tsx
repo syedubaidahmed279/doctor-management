@@ -40,6 +40,15 @@ const registerFields = [
     validation: z.string().min(1, { message: "City has to be filled." }),
   },
   {
+    name: "mapUrl",
+    label: "Map URL",
+    type: "url",
+    placeholder: "Enter map URL...",
+    validation: z.string().min(1, {
+      message: "Map URL has to be filled.",
+    }),
+  },
+  {
     name: "gstin",
     label: "GSTIN",
     type: "text",

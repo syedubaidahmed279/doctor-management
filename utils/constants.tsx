@@ -167,7 +167,7 @@ export const users = [
 
 export const standardPackages = [
   {
-    price: "1,499",
+    price: "2,889",
     billing: "Monthly",
     type: "Basic Package",
     planId: "plan_P6C9maAJqBgdbx",
@@ -182,7 +182,7 @@ export const standardPackages = [
     icon: <FileClock className="text-white w-[45px] h-[45px] -mb-5" />,
   },
   {
-    price: "8,994",
+    price: "15,600",
     discount: "10%",
     billing: "Semi-Annual",
     type: "Semi-Annual Package",
@@ -196,7 +196,7 @@ export const standardPackages = [
     icon: <NotebookPen className="text-white w-[45px] h-[45px] -mb-5" />,
   },
   {
-    price: "17,988",
+    price: "27,734",
     billing: "Annual",
     discount: "20%",
     type: "Annual Package",
