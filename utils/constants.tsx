@@ -170,7 +170,7 @@ export const standardPackages = [
     price: "2,889",
     billing: "Monthly",
     type: "Basic Package",
-    planId: "plan_QbApLkrC565IuH",
+    planId: "plan_QbaftQvwPu8g0k",
 
     features: [
       "Record patient data, including name, phone number, and next appointment date",
@@ -186,7 +186,7 @@ export const standardPackages = [
     discount: "10%",
     billing: "Semi-Annual",
     type: "Semi-Annual Package",
-    planId: "plan_QbAol8j2VLsrfQ",
+    planId: "plan_QbagArx2liilHZ",
     features: [
       "All features from the 1-month plan",
       "Patient data analytics and insights",
@@ -200,7 +200,7 @@ export const standardPackages = [
     billing: "Annual",
     discount: "20%",
     type: "Annual Package",
-    planId: "plan_QbAnm9Huq6xaPY",
+    planId: "plan_QbagSptFFo3vkS",
     features: [
       "All features from the 6-month plan",
       "Dedicated account manager",
