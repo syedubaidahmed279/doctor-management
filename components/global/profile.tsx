@@ -14,6 +14,7 @@ export default function Profile() {
   const [image, setImage] = useState(null);
   const { user, setUserRefetch, userRefetch } = useAppContext();
   const onSubmit = async (data: any) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
     setLoading(true);
 
     data.image = image ? image : user?.image;

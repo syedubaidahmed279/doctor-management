@@ -41,7 +41,6 @@ export function DataTable<TData, TValue>({
     "all" | "subscribed" | "unsubscribed"
   >("all");
 
-  console.log({ data });
   // Filter data based on subscription status
   const filteredData = useMemo(() => {
     if (subscriptionFilter === "all") return data;

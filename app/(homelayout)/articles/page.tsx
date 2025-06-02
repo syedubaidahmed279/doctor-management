@@ -46,21 +46,13 @@ const HomeArticlePage = () => {
             ))}
           </div>
         </div>
-      </div>
 
-      <Suspense
-        fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
-      >
-        <Advertisement position="sidebar" className="absolute top-0 left-0" />
-      </Suspense>
-      <Suspense
-        fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
-      >
-        <Advertisement
-          position="sidebar"
-          className="absolute bottom-0 right-0"
-        />
-      </Suspense>
+        <Suspense
+          fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
+        >
+          <Advertisement position="before-footer" />
+        </Suspense>
+      </div>
     </div>
   );
 };

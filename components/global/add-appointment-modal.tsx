@@ -20,17 +20,19 @@ import { useState } from "react";
 import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 import { toast } from "sonner";
+import { PhoneInput } from "../ui/phone-input";
+import { sendMessage } from "@/app/actions";
 
 export function AddAppointmentModal() {
   const [inputs, setInputs] = useState<any>({});
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [date, setDate] = useState<any>();
   const { user, appointmentRefetch, setAppointmentRefetch } = useAppContext();
 
-  console.log({ user });
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     inputs.nextAppointmentDate = format(date, "PPP");
     inputs.doctor = user?._id;
     inputs.doctorName = user?.name;
@@ -38,16 +40,18 @@ export function AddAppointmentModal() {
     try {
       const promise = await api.post(`/appointment/create`, inputs);
       if (promise.status === 200) {
+        await sendMessage(inputs?.patientName, inputs.phone, user?.mapUrl);
         setAppointmentRefetch(!appointmentRefetch);
         setInputs({});
         setOpen(false);
+        setLoading(false);
         toast.success(`New appointment added.`, {
           position: "top-center",
         });
       }
     } catch (error: any) {
       console.log(error);
-
+      setLoading(false);
       return toast.error(
         error.response.data.message || `Failed to add new appointment!`,
         {
@@ -58,13 +62,13 @@ export function AddAppointmentModal() {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} modal={false}>
       <DialogTrigger asChild>
         <Button className="text-xs md:text-sm">
           <Plus className="mr-2 h-4 w-4" /> Add New Appointment
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] ">
         <DialogHeader>
           <DialogTitle>Add new appointment</DialogTitle>
           <DialogDescription></DialogDescription>
@@ -101,11 +105,19 @@ export function AddAppointmentModal() {
             <Label htmlFor="username" className="">
               Phone Number
             </Label>
-            <Input
+            {/* <Input
               type="number"
               className=""
               required
               onChange={(e) => setInputs({ ...inputs, phone: e.target.value })}
+            /> */}
+
+            <PhoneInput
+              value={inputs.phone}
+              onChange={(value) => {
+                setInputs({ ...inputs, phone: value });
+              }}
+              className="w-full"
             />
           </div>
           <div className="flex flex-col justify-start items-start gap-2">
@@ -147,7 +159,9 @@ export function AddAppointmentModal() {
             />
           </div>
           <DialogFooter>
-            <Button type="submit">Add</Button>
+            <Button type="submit" disabled={loading}>
+              {loading ? "Adding..." : "Add"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
