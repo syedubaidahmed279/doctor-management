@@ -30,8 +30,21 @@ export default function ProfileForm({
     password: z.string(),
     city: z.string(),
     state: z.string(),
-
+    gstin: z
+      .string()
+      .transform((val) => (val.trim() === "" ? undefined : val))
+      .optional()
+      .refine(
+        (val) =>
+          val === undefined ||
+          /^\d{2}[A-Z]{5}\d{4}[A-Z]{1}\d{1}[A-Z]{1}\d{1}$/.test(val),
+        {
+          message:
+            "Invalid GSTIN format. Please ensure it follows the correct pattern: 22AAAAA0000A1Z5.",
+        }
+      ),
     address: z.string(),
+    mapUrl: z.string().url().optional(),
   });
 
   console.log(user);
@@ -45,8 +58,9 @@ export default function ProfileForm({
     password: "",
     city: user?.hospitalAddress?.city || "",
     state: user?.hospitalAddress?.state || "",
-
+    gstin: user?.gstin === "undefined" ? "" : user?.gstin,
     address: user?.hospitalAddress?.address || "",
+    mapUrl: user?.mapUrl || "",
   };
 
   const form = useForm({
@@ -66,8 +80,9 @@ export default function ProfileForm({
     "password",
     "city",
     "state",
-
+    "gstin",
     "address",
+    "mapUrl",
   ]);
 
   useEffect(() => {
@@ -115,6 +130,41 @@ export default function ProfileForm({
                   <FormLabel>Hospital Name</FormLabel>
                   <FormControl>
                     <Input disabled={loading} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gstin"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>GSTIN</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      {...field}
+                      placeholder="(e.g., 22AAAAA0000A1Z5)"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="mapUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Google Maps URL</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="url"
+                      disabled={loading}
+                      {...field}
+                      // placeholder="https://maps.app.goo.gl/8x3fqsFRexfRWCaJ6"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

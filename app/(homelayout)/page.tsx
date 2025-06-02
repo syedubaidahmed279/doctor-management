@@ -16,11 +16,11 @@ const Home = () => {
       </div>
       <div className="relative">
         <ChooseUs />
-        <Suspense
+        {/* <Suspense
           fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
         >
           <Advertisement position="sidebar" className="absolute top-0 left-0" />
-        </Suspense>
+        </Suspense> */}
       </div>
       <Onboard />
       <Suspense
@@ -36,14 +36,14 @@ const Home = () => {
       </Suspense>
       <div className="relative">
         <Faqs />
-        <Suspense
+        {/* <Suspense
           fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}
         >
           <Advertisement
             position="sidebar"
             className="absolute top-0 right-0"
           />
-        </Suspense>
+        </Suspense> */}
       </div>
       <Suspense
         fallback={<div className="h-[250px] animate-pulse bg-muted"></div>}

@@ -1,12 +1,9 @@
-'use client';
+"use client";
 
-import { Toaster } from 'sonner';
-import ContextProvider, { useAppContext } from './context';
-import Whatsapp from '@/components/global/whatsapp';
+import { Toaster } from "sonner";
+import ContextProvider, { useAppContext } from "./context";
 
 export default function Provider({ children }: any) {
-  const { user } = useAppContext();
-  console.log(user);
   return (
     <ContextProvider>
       {children}

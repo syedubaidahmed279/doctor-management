@@ -9,7 +9,7 @@ const FaqPage = () => {
       <Suspense
         fallback={<div className="h-[250px] animate-pulse bg-gray-200"></div>}
       >
-        <Advertisement position="before-footer" className="" />
+        <Advertisement position="before-footer" />
       </Suspense>
     </div>
   );

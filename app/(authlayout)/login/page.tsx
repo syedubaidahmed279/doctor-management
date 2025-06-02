@@ -8,6 +8,8 @@ import AuthForm from "@/components/auth/auth-form";
 import api from "@/utils/axiosInstance";
 import { useAppContext } from "@/lib/context";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { Advertisement } from "@/components/global/advertisement";
 const loginFields = [
   {
     name: "email",
@@ -57,12 +59,14 @@ export default function Login() {
   };
 
   return (
-    <Auth title={"Login"} description={" "}>
-      <AuthForm
-        inputFields={loginFields}
-        onSubmit={handleSubmit}
-        submitButtonText="Login"
-      />
-    </Auth>
+    <>
+      <Auth title={"Login"} description={" "}>
+        <AuthForm
+          inputFields={loginFields}
+          onSubmit={handleSubmit}
+          submitButtonText="Login"
+        />
+      </Auth>
+    </>
   );
 }
